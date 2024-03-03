@@ -1,6 +1,10 @@
 app:
   telegram-token: ${BOT_API_KEY}
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+
 spring:
   application:
     name: bot

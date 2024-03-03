@@ -1,4 +1,4 @@
-package edu.java.github;
+package edu.java.scrapper.clients.github;
 
 import org.springframework.web.reactive.function.client.WebClient;
 
