@@ -1,8 +1,8 @@
 package edu.java.scrapper.clients.stackoverflow;
 
-import java.util.Objects;
 import edu.java.scrapper.dtos.stackoverflow.QuestionResponse;
 import edu.java.scrapper.dtos.stackoverflow.QuestionsResponse;
+import java.util.Objects;
 import org.springframework.web.reactive.function.client.WebClient;
 
 public class StackOverflowQuestionsClient implements StackOverflowClient {
