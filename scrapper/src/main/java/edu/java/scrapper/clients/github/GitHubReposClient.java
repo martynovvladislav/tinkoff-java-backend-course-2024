@@ -1,4 +1,4 @@
-package edu.java.github;
+package edu.java.scrapper.clients.github;
 
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -7,7 +7,10 @@ public class GitHubReposClient implements GitHubClient {
     private final static String DEFAULT_URL = "https://api.github.com";
 
     public GitHubReposClient() {
-        this.webClient = WebClient.builder().baseUrl(DEFAULT_URL).build();
+        this.webClient = WebClient
+            .builder()
+            .baseUrl(DEFAULT_URL)
+            .build();
     }
 
     public GitHubReposClient(String url) {

@@ -1,4 +1,4 @@
-package edu.java.stackoverflow;
+package edu.java.scrapper.clients.stackoverflow;
 
 import java.util.Objects;
 import org.springframework.web.reactive.function.client.WebClient;
