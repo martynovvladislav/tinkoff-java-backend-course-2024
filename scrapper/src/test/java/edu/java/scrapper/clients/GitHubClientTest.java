@@ -3,7 +3,7 @@ package edu.java.scrapper.clients;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import edu.java.scrapper.clients.github.GitHubReposClient;
-import edu.java.scrapper.clients.github.ReposResponse;
+import edu.java.scrapper.dtos.github.ReposResponse;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
