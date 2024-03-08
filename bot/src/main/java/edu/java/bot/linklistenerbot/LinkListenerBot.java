@@ -39,7 +39,8 @@ public class LinkListenerBot implements Bot {
         this.bot = new TelegramBot(applicationConfig.telegramToken());
         bot.setUpdatesListener(this);
         SetMyCommands setMyCommands = new SetMyCommands(
-            commands.stream()
+            commands
+                .stream()
                 .map(Command::toApiCommand)
                 .toArray(BotCommand[]::new)
         );
