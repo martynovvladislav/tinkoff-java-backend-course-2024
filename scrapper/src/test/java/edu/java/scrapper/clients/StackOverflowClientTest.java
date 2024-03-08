@@ -1,7 +1,7 @@
 package edu.java.scrapper.clients;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
-import edu.java.scrapper.clients.stackoverflow.QuestionResponse;
+import edu.java.scrapper.dtos.stackoverflow.QuestionResponse;
 import edu.java.scrapper.clients.stackoverflow.StackOverflowQuestionsClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
