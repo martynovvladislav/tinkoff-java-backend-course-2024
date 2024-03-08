@@ -8,7 +8,10 @@ public class GitHubReposClient implements GitHubClient {
     private final static String DEFAULT_URL = "https://api.github.com";
 
     public GitHubReposClient() {
-        this.webClient = WebClient.builder().baseUrl(DEFAULT_URL).build();
+        this.webClient = WebClient
+            .builder()
+            .baseUrl(DEFAULT_URL)
+            .build();
     }
 
     public GitHubReposClient(String url) {

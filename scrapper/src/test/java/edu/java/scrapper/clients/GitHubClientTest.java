@@ -1,12 +1,9 @@
 package edu.java.scrapper.clients;
 
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import edu.java.scrapper.clients.github.GitHubReposClient;
 import edu.java.scrapper.dtos.github.ReposResponse;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.time.OffsetDateTime;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
@@ -16,20 +13,8 @@ import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 
+@WireMockTest(httpPort = 8080)
 public class GitHubClientTest {
-    private static WireMockServer wireMockServer;
-
-    @BeforeAll
-    static void setup() {
-        wireMockServer = new WireMockServer();
-        wireMockServer.start();
-        WireMock.configureFor("localhost", wireMockServer.port());
-    }
-
-    @AfterAll
-    static void stop() {
-        wireMockServer.stop();
-    }
 
     @Test
     void fetchDataTest() {
@@ -43,7 +28,7 @@ public class GitHubClientTest {
                         .withBody(expectedJsonBody)
                 )
         );
-        GitHubReposClient gitHubReposClient = new GitHubReposClient("http://localhost:" + wireMockServer.port());
+        GitHubReposClient gitHubReposClient = new GitHubReposClient("http://localhost:8080");
         ReposResponse reposResponse = gitHubReposClient.fetchUser(
             "martynovvladislav", "tinkoff-java-backend-course-2024"
         );
