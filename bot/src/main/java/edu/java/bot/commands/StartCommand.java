@@ -3,32 +3,10 @@ package edu.java.bot.commands;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class StartCommand implements Command {
-
-    private final List<Command> commands;
-
-    @Autowired
-    public StartCommand(
-        HelpCommand helpCommand,
-        TrackCommand trackCommand,
-        UntrackCommand untrackCommand,
-        ListCommand listCommand
-    ) {
-        commands = new ArrayList<>(
-            List.of(
-                helpCommand,
-                trackCommand,
-                untrackCommand,
-                listCommand
-            )
-        );
-    }
 
     @Override
     public String command() {

@@ -2,26 +2,17 @@ package edu.java.bot.commands;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class HelpCommand implements Command {
 
-    private final List<Command> commands;
+    private final List<? extends Command> commands;
 
-    @Autowired
-    public HelpCommand(TrackCommand trackCommand, UntrackCommand untrackCommand, ListCommand listCommand) {
-        commands = new ArrayList<>(
-            List.of(
-                trackCommand,
-                untrackCommand,
-                listCommand
-            )
-        );
+    public HelpCommand(List<? extends Command> commands) {
+        this.commands = commands;
     }
 
     @Override
@@ -36,7 +27,8 @@ public class HelpCommand implements Command {
 
     @Override
     public SendMessage handle(Update update) {
-        String answer = commands.stream()
+        String answer = commands
+            .stream()
             .filter(cmd -> !cmd.command().equals("/start"))
             .map(
                 cmd -> cmd.command() + " - " + cmd.description() + "\n"
