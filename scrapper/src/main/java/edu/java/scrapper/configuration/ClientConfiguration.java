@@ -1,5 +1,6 @@
 package edu.java.scrapper.configuration;
 
+import edu.java.scrapper.clients.bot.BotClientImpl;
 import edu.java.scrapper.clients.github.GitHubReposClient;
 import edu.java.scrapper.clients.stackoverflow.StackOverflowQuestionsClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,10 @@ public class ClientConfiguration {
     @Bean
     public StackOverflowQuestionsClient stackOverflowQuestionsClient() {
         return new StackOverflowQuestionsClient(webClientConfiguration);
+    }
+
+    @Bean
+    public BotClientImpl botClient() {
+        return new BotClientImpl(webClientConfiguration);
     }
 }

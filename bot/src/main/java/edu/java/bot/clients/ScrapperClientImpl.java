@@ -1,27 +1,27 @@
 package edu.java.bot.clients;
 
+import edu.java.bot.configuration.WebClientConfiguration;
 import edu.java.bot.dtos.AddLinkRequestDto;
 import edu.java.bot.dtos.LinkResponseDto;
 import edu.java.bot.dtos.ListLinkResponseDto;
 import edu.java.bot.dtos.RemoveLinkRequestDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.reactive.function.client.WebClient;
 
 public class ScrapperClientImpl implements ScrapperClient {
-    private static final String DEFAULT_URL = "http://localhost:8080";
     private static final String LINKS_ENDPOINT = "/links";
     private static final String TG_ENDPOINT = "/tg-chat/{id}";
     private static final String TG_HEADER = "Tg-chat-Id";
     private final WebClient webClient;
+    private final WebClientConfiguration webClientConfiguration;
 
-    public ScrapperClientImpl() {
-        this(DEFAULT_URL);
-    }
-
-    public ScrapperClientImpl(String url) {
+    @Autowired
+    public ScrapperClientImpl(WebClientConfiguration webClientConfiguration) {
+        this.webClientConfiguration = webClientConfiguration;
         this.webClient = WebClient
             .builder()
-            .baseUrl(url)
+            .baseUrl(this.webClientConfiguration.scrapperClientConfig().baseUrl())
             .build();
     }
 
