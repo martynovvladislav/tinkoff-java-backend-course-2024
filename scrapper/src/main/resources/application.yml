@@ -17,3 +17,11 @@ server:
 
 logging:
   config: classpath:log4j2-plain.xml
+
+web-clients:
+  github-client-config:
+    base-url: ${GITHUB_BASE_URL:https://api.github.com}
+  so-client-config:
+    base-url: ${SO_BASE_URL:https://api.stackexchange.com}
+  bot-client-config:
+    base-url: ${BOT_BASE_URL:http://localhost:8090}

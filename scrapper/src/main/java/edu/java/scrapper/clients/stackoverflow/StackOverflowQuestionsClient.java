@@ -1,5 +1,6 @@
 package edu.java.scrapper.clients.stackoverflow;
 
+import edu.java.scrapper.configuration.WebClientConfiguration;
 import edu.java.scrapper.dtos.stackoverflow.QuestionResponse;
 import edu.java.scrapper.dtos.stackoverflow.QuestionsResponse;
 import java.util.Objects;
@@ -7,17 +8,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 public class StackOverflowQuestionsClient implements StackOverflowClient {
     private final WebClient webClient;
-    private final static String DEFAULT_URL = "https://api.stackexchange.com";
+    private final WebClientConfiguration webClientConfiguration;
 
-    public StackOverflowQuestionsClient() {
+    public StackOverflowQuestionsClient(WebClientConfiguration webClientConfiguration) {
+        this.webClientConfiguration = webClientConfiguration;
         this.webClient = WebClient.builder()
-            .baseUrl(DEFAULT_URL)
-            .build();
-    }
-
-    public StackOverflowQuestionsClient(String url) {
-        this.webClient = WebClient.builder()
-            .baseUrl(url)
+            .baseUrl(this.webClientConfiguration.soClientConfig().baseUrl())
             .build();
     }
 

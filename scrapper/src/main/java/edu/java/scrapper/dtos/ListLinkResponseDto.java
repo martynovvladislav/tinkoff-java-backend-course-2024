@@ -1,13 +1,14 @@
 package edu.java.scrapper.dtos;
 
-import java.net.URI;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class AddLinkRequest {
-    URI link;
+@NoArgsConstructor
+public class ListLinkResponseDto {
+    List<LinkResponseDto> links;
+    Integer size;
 }

@@ -1,27 +1,24 @@
-package edu.java.scrapper.controllers;
+package edu.java.scrapper.exceptions;
 
-import edu.java.scrapper.dtos.ApiErrorResponse;
-import edu.java.scrapper.exceptions.ChatDoesNotExistException;
-import edu.java.scrapper.exceptions.LinkAlreadyExistException;
+import edu.java.scrapper.dtos.ApiErrorResponseDto;
 import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
-public class ExceptionController {
+public class ExceptionHandler {
     private final static String REQUEST_EXCEPTION_DESCRIPTION = "Incorrect request parameters";
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiErrorResponse> notValidArgument(MethodArgumentNotValidException e) {
+    @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiErrorResponseDto> notValidArgument(MethodArgumentNotValidException e) {
         log.info("incorrect parameters exception");
         return new ResponseEntity<>(
-                new ApiErrorResponse(
+                new ApiErrorResponseDto(
                     REQUEST_EXCEPTION_DESCRIPTION,
                     String.valueOf(HttpStatus.BAD_REQUEST.value()),
                     e.getClass().getSimpleName(),
@@ -34,11 +31,11 @@ public class ExceptionController {
             );
     }
 
-    @ExceptionHandler(ChatDoesNotExistException.class)
-    public ResponseEntity<ApiErrorResponse> wrongChatId(ChatDoesNotExistException e) {
+    @org.springframework.web.bind.annotation.ExceptionHandler(ChatDoesNotExistException.class)
+    public ResponseEntity<ApiErrorResponseDto> wrongChatId(ChatDoesNotExistException e) {
         log.info("chat does not exist exception");
         return new ResponseEntity<>(
-            new ApiErrorResponse(
+            new ApiErrorResponseDto(
                 "Chat has not been found",
                 String.valueOf(HttpStatus.BAD_REQUEST.value()),
                 e.getClass().getSimpleName(),
@@ -51,11 +48,11 @@ public class ExceptionController {
         );
     }
 
-    @ExceptionHandler(LinkAlreadyExistException.class)
-    public ResponseEntity<ApiErrorResponse> charAlreadyExist(LinkAlreadyExistException e) {
+    @org.springframework.web.bind.annotation.ExceptionHandler(LinkAlreadyExistException.class)
+    public ResponseEntity<ApiErrorResponseDto> charAlreadyExist(LinkAlreadyExistException e) {
         log.info("link already exist exception");
         return new ResponseEntity<>(
-            new ApiErrorResponse(
+            new ApiErrorResponseDto(
                 "link already exist",
                 String.valueOf(HttpStatus.BAD_REQUEST.value()),
                 e.getClass().getSimpleName(),
@@ -68,11 +65,11 @@ public class ExceptionController {
         );
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ApiErrorResponse> notReadableMessage(HttpMessageNotReadableException e) {
+    @org.springframework.web.bind.annotation.ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiErrorResponseDto> notReadableMessage(HttpMessageNotReadableException e) {
         log.info("Bad parameters");
         return new ResponseEntity<>(
-            new ApiErrorResponse(
+            new ApiErrorResponseDto(
                 REQUEST_EXCEPTION_DESCRIPTION,
                 String.valueOf(HttpStatus.BAD_REQUEST.value()),
                 e.getClass().getSimpleName(),

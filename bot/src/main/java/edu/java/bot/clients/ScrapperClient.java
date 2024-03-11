@@ -1,16 +1,16 @@
 package edu.java.bot.clients;
 
-import edu.java.bot.dtos.AddLinkRequest;
-import edu.java.bot.dtos.LinkResponse;
-import edu.java.bot.dtos.ListLinkResponse;
-import edu.java.bot.dtos.RemoveLinkRequest;
+import edu.java.bot.dtos.AddLinkRequestDto;
+import edu.java.bot.dtos.LinkResponseDto;
+import edu.java.bot.dtos.ListLinkResponseDto;
+import edu.java.bot.dtos.RemoveLinkRequestDto;
 
 public interface ScrapperClient {
-    ListLinkResponse getLinks(Long tgChatId);
+    ListLinkResponseDto getLinks(Long tgChatId);
 
-    LinkResponse addLink(Long tgChatId, AddLinkRequest addLinkRequest);
+    LinkResponseDto addLink(Long tgChatId, AddLinkRequestDto addLinkRequestDto);
 
-    LinkResponse deleteLink(Long tgChatId, RemoveLinkRequest removeLinkRequest);
+    LinkResponseDto deleteLink(Long tgChatId, RemoveLinkRequestDto removeLinkRequestDto);
 
     void registerChat(Long id);
 

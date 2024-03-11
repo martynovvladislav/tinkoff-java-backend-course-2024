@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ApiErrorResponse {
+public class ApiErrorResponseDto {
     String description;
     String code;
     String exceptionName;

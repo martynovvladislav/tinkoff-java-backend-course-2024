@@ -1,6 +1,6 @@
 package edu.java.bot.dtos;
 
-import java.util.List;
+import java.net.URI;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ListLinkResponse {
-    List<LinkResponse> links;
-    Integer size;
+public class AddLinkRequestDto {
+    URI link;
 }

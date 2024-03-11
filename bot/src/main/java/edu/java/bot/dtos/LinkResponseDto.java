@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AddLinkRequest {
-    URI link;
+public class LinkResponseDto {
+    Long id;
+    URI url;
 }

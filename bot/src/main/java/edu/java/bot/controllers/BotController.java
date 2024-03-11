@@ -1,6 +1,6 @@
 package edu.java.bot.controllers;
 
-import edu.java.bot.dtos.LinkUpdate;
+import edu.java.bot.dtos.LinkUpdateDto;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ public class BotController {
     public ResponseEntity<Void> sendMessage(
         @Valid
         @RequestBody
-        LinkUpdate linkUpdate
+        LinkUpdateDto linkUpdateDto
     ) {
         log.info("Update has been sent");
         return new ResponseEntity<>(HttpStatus.OK);
