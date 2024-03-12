@@ -1,4 +1,4 @@
-package edu.java.scrapper.dtos;
+package edu.java.bot.dtos;
 
 import java.net.URI;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class LinkUpdate {
+public class LinkUpdateDto {
     @NotNull
     Long id;
 

@@ -1,7 +1,7 @@
 package edu.java.scrapper.clients.github;
 
-import edu.java.scrapper.dtos.github.ReposResponse;
+import edu.java.scrapper.dtos.github.ReposResponseDto;
 
 public interface GitHubClient {
-    ReposResponse fetchUser(String owner, String repos);
+    ReposResponseDto fetchUser(String owner, String repos);
 }

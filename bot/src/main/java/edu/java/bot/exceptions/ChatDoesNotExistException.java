@@ -1,5 +1,5 @@
 package edu.java.bot.exceptions;
 
-public class ChatDoesNotExistException extends Exception {
+public class ChatDoesNotExistException extends RuntimeException {
 
 }

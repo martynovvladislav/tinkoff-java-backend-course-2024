@@ -1,7 +1,7 @@
 package edu.java.scrapper.clients.bot;
 
-import edu.java.scrapper.dtos.LinkUpdate;
+import edu.java.scrapper.dtos.LinkUpdateDto;
 
 public interface BotClient {
-    void sendMessage(LinkUpdate linkUpdate);
+    void sendMessage(LinkUpdateDto linkUpdateDto);
 }

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class RemoveLinkRequest {
+public class RemoveLinkRequestDto {
     URI link;
 }

@@ -16,3 +16,7 @@ server:
 
 logging:
   config: classpath:log4j2-plain.xml
+
+web-clients:
+  scrapper-client-config:
+    base-url: ${SCRAPPER_BASE_URL:http://localhost:8080}

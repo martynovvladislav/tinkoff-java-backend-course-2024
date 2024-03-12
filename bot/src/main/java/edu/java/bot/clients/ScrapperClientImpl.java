@@ -1,56 +1,59 @@
 package edu.java.bot.clients;
 
-import edu.java.bot.dtos.AddLinkRequest;
-import edu.java.bot.dtos.LinkResponse;
-import edu.java.bot.dtos.ListLinkResponse;
-import edu.java.bot.dtos.RemoveLinkRequest;
+import edu.java.bot.configuration.WebClientConfiguration;
+import edu.java.bot.dtos.AddLinkRequestDto;
+import edu.java.bot.dtos.LinkResponseDto;
+import edu.java.bot.dtos.ListLinkResponseDto;
+import edu.java.bot.dtos.RemoveLinkRequestDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.reactive.function.client.WebClient;
 
 public class ScrapperClientImpl implements ScrapperClient {
-    private final static String DEFAULT_URL = "http://localhost:8080";
-    private final static String LINKS_ENDPOINT = "/links";
-    private final static String TG_ENDPOINT = "/tg-chat/{id}";
-    private final static String TG_HEADER = "Tg-chat-Id";
+    private static final String LINKS_ENDPOINT = "/links";
+    private static final String TG_ENDPOINT = "/tg-chat/{id}";
+    private static final String TG_HEADER = "Tg-chat-Id";
     private final WebClient webClient;
+    private final WebClientConfiguration webClientConfiguration;
 
-    public ScrapperClientImpl() {
-        this(DEFAULT_URL);
-    }
-
-    public ScrapperClientImpl(String url) {
-        this.webClient = WebClient.builder().baseUrl(url).build();
+    @Autowired
+    public ScrapperClientImpl(WebClientConfiguration webClientConfiguration) {
+        this.webClientConfiguration = webClientConfiguration;
+        this.webClient = WebClient
+            .builder()
+            .baseUrl(this.webClientConfiguration.scrapperClientConfig().baseUrl())
+            .build();
     }
 
     @Override
-    public ListLinkResponse getLinks(Long tgChatId) {
+    public ListLinkResponseDto getLinks(Long tgChatId) {
         return webClient.get()
             .uri(LINKS_ENDPOINT)
             .header(TG_HEADER, String.valueOf(tgChatId))
             .retrieve()
-            .bodyToMono(ListLinkResponse.class)
+            .bodyToMono(ListLinkResponseDto.class)
             .block();
     }
 
     @Override
-    public LinkResponse addLink(Long tgChatId, AddLinkRequest addLinkRequest) {
+    public LinkResponseDto addLink(Long tgChatId, AddLinkRequestDto addLinkRequestDto) {
         return webClient.post()
             .uri(LINKS_ENDPOINT)
             .header(TG_HEADER, String.valueOf(tgChatId))
-            .bodyValue(addLinkRequest)
+            .bodyValue(addLinkRequestDto)
             .retrieve()
-            .bodyToMono(LinkResponse.class)
+            .bodyToMono(LinkResponseDto.class)
             .block();
     }
 
     @Override
-    public LinkResponse deleteLink(Long tgChatId, RemoveLinkRequest removeLinkRequest) {
+    public LinkResponseDto deleteLink(Long tgChatId, RemoveLinkRequestDto removeLinkRequestDto) {
         return webClient.method(HttpMethod.DELETE)
             .uri(LINKS_ENDPOINT)
             .header(TG_HEADER, String.valueOf(tgChatId))
-            .bodyValue(removeLinkRequest)
+            .bodyValue(removeLinkRequestDto)
             .retrieve()
-            .bodyToMono(LinkResponse.class)
+            .bodyToMono(LinkResponseDto.class)
             .block();
     }
 
