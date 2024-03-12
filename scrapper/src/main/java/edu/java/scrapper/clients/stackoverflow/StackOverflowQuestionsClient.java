@@ -1,4 +1,5 @@
 package edu.java.scrapper.clients.stackoverflow;
+
 import edu.java.scrapper.configuration.WebClientConfiguration;
 import edu.java.scrapper.dtos.stackoverflow.QuestionResponse;
 import edu.java.scrapper.dtos.stackoverflow.QuestionsResponse;
@@ -11,7 +12,8 @@ public class StackOverflowQuestionsClient implements StackOverflowClient {
 
     public StackOverflowQuestionsClient(WebClientConfiguration webClientConfiguration) {
         this.webClientConfiguration = webClientConfiguration;
-        this.webClient = WebClient.builder()
+        this.webClient = WebClient
+            .builder()
             .baseUrl(this.webClientConfiguration.soClientConfig().baseUrl())
             .build();
     }
