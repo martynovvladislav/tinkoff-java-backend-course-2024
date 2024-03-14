@@ -18,7 +18,7 @@ public class ClientConfiguration {
 
     @Bean
     public GitHubReposClient gitHubReposClient() {
-        return new GitHubReposClient(webClientConfiguration);
+        return GitHubReposClient.builder().baseUrl(webClientConfiguration.githubClientConfig().baseUrl()).build();
     }
 
     @Bean

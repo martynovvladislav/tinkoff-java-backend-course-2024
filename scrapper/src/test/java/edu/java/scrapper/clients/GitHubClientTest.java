@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.reactive.function.client.WebClient;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
@@ -43,7 +44,7 @@ public class GitHubClientTest {
                     .withBody(expectedJsonBody)
             )
         );
-        GitHubReposClient gitHubReposClient = new GitHubReposClient(webClientConfiguration);
+        GitHubReposClient gitHubReposClient = GitHubReposClient.builder().baseUrl("123").build();
         ReposResponseDto reposResponseDto = gitHubReposClient.fetchUser(
             "martynovvladislav", "tinkoff-java-backend-course-2024"
         );
