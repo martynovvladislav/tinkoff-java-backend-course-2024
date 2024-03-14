@@ -57,6 +57,7 @@ public class JdbcLinkService implements LinkService {
     }
 
     @Override
+    @Transactional
     public List<LinkDto> listAll(long tgChatId) {
         return chatLinkRepository.findAll().stream()
             .filter(chatLinkDto -> chatLinkDto.getChatId().equals(tgChatId))
@@ -65,6 +66,7 @@ public class JdbcLinkService implements LinkService {
     }
 
     @Override
+    @Transactional
     public List<Long> listAllByLinkId(Integer linkId) {
         return chatLinkRepository.findAll().stream()
             .filter(chatLinkDto -> chatLinkDto.getLinkId().equals(linkId))
@@ -73,6 +75,7 @@ public class JdbcLinkService implements LinkService {
     }
 
     @Override
+    @Transactional
     public List<LinkDto> findOld(long secondThreshold) {
         return linkRepository.findAll().stream()
             .filter(
