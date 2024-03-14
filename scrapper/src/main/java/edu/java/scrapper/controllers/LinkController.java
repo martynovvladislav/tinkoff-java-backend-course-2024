@@ -1,6 +1,6 @@
 package edu.java.scrapper.controllers;
 
-import edu.java.scrapper.domain.dtos.Link;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import edu.java.scrapper.dtos.AddLinkRequestDto;
 import edu.java.scrapper.dtos.LinkResponseDto;
 import edu.java.scrapper.dtos.ListLinkResponseDto;
@@ -31,10 +31,10 @@ public class LinkController {
     public ResponseEntity<ListLinkResponseDto> getLinks(
         @RequestHeader("Tg-Chat-Id") Long tgChatId
     ) {
-        List<Link> linkList = linkService.listAll(tgChatId);
+        List<LinkDto> linkDtoList = linkService.listAll(tgChatId);
         ListLinkResponseDto listLinkResponseDto = new ListLinkResponseDto();
         listLinkResponseDto.setLinks(
-            linkList.stream()
+            linkDtoList.stream()
                 .map(link -> {
                     try {
                         return new LinkResponseDto(link.getId().longValue(), new URI(link.getUrl()));

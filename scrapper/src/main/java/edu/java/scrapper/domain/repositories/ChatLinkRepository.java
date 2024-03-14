@@ -1,6 +1,6 @@
 package edu.java.scrapper.domain.repositories;
 
-import edu.java.scrapper.domain.dtos.ChatLink;
+import edu.java.scrapper.domain.dtos.ChatLinkDto;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Repository;
 public class ChatLinkRepository {
     private final JdbcClient jdbcClient;
 
-    public Optional<ChatLink> find(Long tgChatId, Integer linkId) {
+    public Optional<ChatLinkDto> find(Long tgChatId, Integer linkId) {
         String sql = "SELECT * FROM connections WHERE chat_id = ? AND link_id = ?";
         return jdbcClient.sql(sql)
             .params(tgChatId, linkId)
-            .query(ChatLink.class)
+            .query(ChatLinkDto.class)
             .optional();
     }
 
@@ -27,10 +27,10 @@ public class ChatLinkRepository {
             .update();
     }
 
-    public List<ChatLink> findAll() {
+    public List<ChatLinkDto> findAll() {
         String sql = "SELECT * FROM connections";
         return jdbcClient.sql(sql)
-            .query(ChatLink.class)
+            .query(ChatLinkDto.class)
             .list();
     }
 

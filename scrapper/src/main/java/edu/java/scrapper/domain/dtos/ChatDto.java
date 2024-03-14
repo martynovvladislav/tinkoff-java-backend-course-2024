@@ -5,7 +5,6 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class ChatLink {
+public class ChatDto {
     Long chatId;
-    Integer linkId;
 }

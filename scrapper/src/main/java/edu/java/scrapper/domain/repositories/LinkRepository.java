@@ -1,6 +1,6 @@
 package edu.java.scrapper.domain.repositories;
 
-import edu.java.scrapper.domain.dtos.Link;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -12,19 +12,19 @@ import org.springframework.stereotype.Repository;
 public class LinkRepository {
     private final JdbcClient jdbcClient;
 
-    public Optional<Link> findByUrl(String url) {
+    public Optional<LinkDto> findByUrl(String url) {
         String sql = "SELECT id,url,updated_at,last_checked_at FROM link WHERE url = ?";
         return jdbcClient.sql(sql)
             .params(url)
-            .query(Link.class)
+            .query(LinkDto.class)
             .optional();
     }
 
-    public Optional<Link> findById(Integer id) {
+    public Optional<LinkDto> findById(Integer id) {
         String sql = "SELECT id,url,updated_at,last_checked_at FROM link WHERE id = ?";
         return jdbcClient.sql(sql)
             .params(id)
-            .query(Link.class)
+            .query(LinkDto.class)
             .optional();
     }
 
@@ -44,15 +44,15 @@ public class LinkRepository {
             .single();
     }
 
-    public Integer add(Link link) {
-        if (findByUrl(link.getUrl()).isEmpty()) {
+    public Integer add(LinkDto linkDto) {
+        if (findByUrl(linkDto.getUrl()).isEmpty()) {
             String sql = "INSERT INTO link(url,updated_at,last_checked_at) VALUES(?, ?, ?) RETURNING id";
             return jdbcClient.sql(sql)
-                .params(link.getUrl(), link.getUpdatedAt(), link.getLastCheckedAt())
+                .params(linkDto.getUrl(), linkDto.getUpdatedAt(), linkDto.getLastCheckedAt())
                 .query(Integer.class)
                 .single();
         }
-        return getLinkId(link.getUrl());
+        return getLinkId(linkDto.getUrl());
     }
 
     public void delete(String url) {
@@ -65,17 +65,17 @@ public class LinkRepository {
 
     }
 
-    public List<Link> findAll() {
+    public List<LinkDto> findAll() {
         String sql = "SELECT * FROM link";
         return jdbcClient.sql(sql)
-            .query(Link.class)
+            .query(LinkDto.class)
             .list();
     }
 
-    public void update(Link link) {
+    public void update(LinkDto linkDto) {
         String sql = "UPDATE link SET updated_at = ?, last_checked_at = ? WHERE id = ?";
         jdbcClient.sql(sql)
-            .params(link.getUpdatedAt(), link.getLastCheckedAt(), link.getId())
+            .params(linkDto.getUpdatedAt(), linkDto.getLastCheckedAt(), linkDto.getId())
             .update();
     }
 }

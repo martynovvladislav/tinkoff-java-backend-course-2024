@@ -1,6 +1,6 @@
 package edu.java.scrapper.services.updaters;
 
-import edu.java.scrapper.domain.dtos.Link;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import java.net.URI;
 import java.net.URISyntaxException;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DefaultLinkUpdater implements LinkUpdater {
     @Override
-    public boolean update(Link link) throws URISyntaxException {
+    public boolean update(LinkDto linkDto) throws URISyntaxException {
         return false;
     }
 

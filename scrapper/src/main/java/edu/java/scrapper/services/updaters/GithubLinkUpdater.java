@@ -1,7 +1,7 @@
 package edu.java.scrapper.services.updaters;
 
 import edu.java.scrapper.clients.github.GitHubReposClient;
-import edu.java.scrapper.domain.dtos.Link;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import edu.java.scrapper.dtos.github.ReposResponseDto;
 import edu.java.scrapper.services.LinkService;
 import java.net.URI;
@@ -20,16 +20,16 @@ public class GithubLinkUpdater implements LinkUpdater {
     private final LinkService linkService;
 
     @Override
-    public boolean update(Link link) throws URISyntaxException {
-        List<String> pathArgs = Arrays.stream(new URI(link.getUrl()).getPath().split("/")).toList();
+    public boolean update(LinkDto linkDto) throws URISyntaxException {
+        List<String> pathArgs = Arrays.stream(new URI(linkDto.getUrl()).getPath().split("/")).toList();
         ReposResponseDto responseDto = gitHubReposClient.fetchUser(pathArgs.get(1), pathArgs.get(2));
-        link.setLastCheckedAt(OffsetDateTime.now());
-        if (!link.getUpdatedAt().equals(responseDto.updatedAt())) {
-            link.setUpdatedAt(responseDto.updatedAt());
-            linkService.update(link);
+        linkDto.setLastCheckedAt(OffsetDateTime.now());
+        if (!linkDto.getUpdatedAt().equals(responseDto.updatedAt())) {
+            linkDto.setUpdatedAt(responseDto.updatedAt());
+            linkService.update(linkDto);
             return true;
         }
-        linkService.update(link);
+        linkService.update(linkDto);
         return false;
     }
 

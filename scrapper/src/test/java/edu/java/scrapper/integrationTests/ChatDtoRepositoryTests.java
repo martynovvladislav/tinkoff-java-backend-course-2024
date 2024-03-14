@@ -1,7 +1,7 @@
 package edu.java.scrapper.integrationTests;
 
 import edu.java.scrapper.domain.repositories.ChatRepository;
-import edu.java.scrapper.domain.dtos.Chat;
+import edu.java.scrapper.domain.dtos.ChatDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +13,11 @@ import java.util.List;
 
 @Testcontainers
 @SpringBootTest
-public class ChatRepositoryTests extends IntegrationTest {
+public class ChatDtoRepositoryTests extends IntegrationTest {
     private final ChatRepository chatRepository;
 
     @Autowired
-    public ChatRepositoryTests(ChatRepository chatRepository) {
+    public ChatDtoRepositoryTests(ChatRepository chatRepository) {
         this.chatRepository = chatRepository;
     }
 
@@ -47,7 +47,7 @@ public class ChatRepositoryTests extends IntegrationTest {
     void findAllChatsTest() {
         chatRepository.add(666L);
         chatRepository.add(1337L);
-        List<Chat> chats = chatRepository.findAll();
-        Assertions.assertEquals(chats, List.of(new Chat(666L), new Chat(1337L)));
+        List<ChatDto> chatDtos = chatRepository.findAll();
+        Assertions.assertEquals(chatDtos, List.of(new ChatDto(666L), new ChatDto(1337L)));
     }
 }

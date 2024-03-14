@@ -1,6 +1,6 @@
 package edu.java.scrapper.domain.repositories;
 
-import edu.java.scrapper.domain.dtos.Chat;
+import edu.java.scrapper.domain.dtos.ChatDto;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Repository;
 public class ChatRepository {
     private final JdbcClient jdbcClient;
 
-    public Optional<Chat> find(Long tgChatId) {
+    public Optional<ChatDto> find(Long tgChatId) {
         String sql = "SELECT chat_id FROM chat WHERE chat_id = ?";
         return jdbcClient.sql(sql)
             .param(tgChatId)
-            .query(Chat.class)
+            .query(ChatDto.class)
             .optional();
     }
 
@@ -34,10 +34,10 @@ public class ChatRepository {
             .update();
     }
 
-    public List<Chat> findAll() {
+    public List<ChatDto> findAll() {
         String sql = "SELECT * FROM chat";
         return jdbcClient.sql(sql)
-            .query(Chat.class)
+            .query(ChatDto.class)
             .list();
     }
 }

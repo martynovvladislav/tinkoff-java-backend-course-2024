@@ -1,7 +1,7 @@
 package edu.java.scrapper.services.jdbc;
 
-import edu.java.scrapper.domain.dtos.ChatLink;
-import edu.java.scrapper.domain.dtos.Link;
+import edu.java.scrapper.domain.dtos.ChatLinkDto;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import edu.java.scrapper.domain.repositories.ChatLinkRepository;
 import edu.java.scrapper.domain.repositories.ChatRepository;
 import edu.java.scrapper.domain.repositories.LinkRepository;
@@ -36,22 +36,22 @@ public class JdbcChatService implements ChatService {
         if (chatRepository.find(tgChatId).isEmpty()) {
             throw new ChatDoesNotExistException();
         }
-        List<ChatLink> chatLinks = chatLinkRepository.findAll().stream()
-            .filter(chatLink -> chatLink.getChatId().equals(tgChatId))
+        List<ChatLinkDto> chatLinkDtos = chatLinkRepository.findAll().stream()
+            .filter(chatLinkDto -> chatLinkDto.getChatId().equals(tgChatId))
             .toList();
-        chatLinks.forEach(
-            chatLink -> chatLinkRepository.delete(tgChatId, chatLink.getLinkId())
+        chatLinkDtos.forEach(
+                chatLinkDto -> chatLinkRepository.delete(tgChatId, chatLinkDto.getLinkId())
         );
 
-        chatLinks = chatLinkRepository.findAll();
-        List<Link> links = linkRepository.findAll();
+        chatLinkDtos = chatLinkRepository.findAll();
+        List<LinkDto> linkDtos = linkRepository.findAll();
 
-        List<ChatLink> finalChatLinks = chatLinks;
-        links.forEach(link -> {
+        List<ChatLinkDto> finalChatLinkDtos = chatLinkDtos;
+        linkDtos.forEach(link -> {
                 if (
-                    finalChatLinks.stream()
+                    finalChatLinkDtos.stream()
                         .filter(
-                            chatLink -> chatLink.getLinkId().equals(link.getId())
+                                chatLinkDto -> chatLinkDto.getLinkId().equals(link.getId())
                         ).toList().isEmpty()
                 ) {
                     linkRepository.delete(link.getUrl());

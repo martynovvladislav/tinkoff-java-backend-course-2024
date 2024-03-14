@@ -1,7 +1,7 @@
 package edu.java.scrapper;
 
 import edu.java.scrapper.clients.bot.BotClientImpl;
-import edu.java.scrapper.domain.dtos.Link;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import edu.java.scrapper.dtos.LinkUpdateDto;
 import edu.java.scrapper.services.LinkService;
 import edu.java.scrapper.services.updaters.LinkUpdater;
@@ -29,16 +29,16 @@ public class LinkUpdateScheduler {
 
     @Scheduled(fixedDelayString = "#{@scheduler.interval()}")
     public void update() throws URISyntaxException {
-        List<Link> linksToUpdate = linkService.findOld(secondsThreshold);
+        List<LinkDto> linksToUpdate = linkService.findOld(secondsThreshold);
         log.info(linksToUpdate.toString());
-        for (Link link : linksToUpdate) {
-            URI url = new URI(link.getUrl());
+        for (LinkDto linkDto : linksToUpdate) {
+            URI url = new URI(linkDto.getUrl());
             LinkUpdater linkUpdater = linkUpdaters.stream()
                 .filter(linkUpdater1 -> linkUpdater1.supports(url))
                 .findFirst()
                 .get();
-            if (linkUpdater.update(link)) {
-                List<Long> chatIds = linkService.listAllByLinkId(link.getId());
+            if (linkUpdater.update(linkDto)) {
+                List<Long> chatIds = linkService.listAllByLinkId(linkDto.getId());
                 botClient.sendMessage(
                     new LinkUpdateDto(
                         url,

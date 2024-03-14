@@ -6,7 +6,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class Link {
+public class LinkDto {
     Integer id;
     String url;
     OffsetDateTime updatedAt;
