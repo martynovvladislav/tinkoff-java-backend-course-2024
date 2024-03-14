@@ -1,5 +1,8 @@
 package edu.java.scrapper.configuration;
 
+import edu.java.scrapper.configuration.webclientconfigs.BotClientConfig;
+import edu.java.scrapper.configuration.webclientconfigs.GithubClientConfig;
+import edu.java.scrapper.configuration.webclientconfigs.SOClientConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.annotation.Validated;
@@ -15,11 +18,4 @@ public record WebClientConfiguration(
 
     @Bean
     BotClientConfig botClientConfig
-
-) {
-    public record GithubClientConfig(String baseUrl) {}
-
-    public record SOClientConfig(String baseUrl) {}
-
-    public record BotClientConfig(String baseUrl) {}
-}
+) {}

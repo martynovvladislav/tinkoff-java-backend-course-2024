@@ -6,11 +6,10 @@ import edu.java.scrapper.configuration.WebClientConfiguration;
 import edu.java.scrapper.dtos.github.ReposResponseDto;
 import java.time.OffsetDateTime;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.reactive.function.client.WebClient;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
@@ -20,17 +19,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 
 @WireMockTest(httpPort = 8080)
 public class GitHubClientTest {
-
-    private WebClientConfiguration webClientConfiguration;
-
-    @BeforeEach
-    void initialize() {
-        webClientConfiguration = Mockito.mock(WebClientConfiguration.class);
-        WebClientConfiguration.GithubClientConfig githubClientConfig = Mockito.mock(WebClientConfiguration.GithubClientConfig.class);
-        Mockito.when(webClientConfiguration.githubClientConfig()).thenReturn(githubClientConfig);
-        Mockito.when(githubClientConfig.baseUrl()).thenReturn("http://localhost:8080");
-    }
-
     @Test
     void fetchDataTest() {
         String expectedJsonBody = "{\"id\":753126272, " +
@@ -43,7 +31,9 @@ public class GitHubClientTest {
                     .withBody(expectedJsonBody)
             )
         );
-        GitHubReposClient gitHubReposClient = new GitHubReposClient(webClientConfiguration);
+        GitHubReposClient gitHubReposClient = GitHubReposClient.builder()
+            .webClient(WebClient.builder().baseUrl("http://localhost:8080").build())
+            .build();
         ReposResponseDto reposResponseDto = gitHubReposClient.fetchUser(
             "martynovvladislav", "tinkoff-java-backend-course-2024"
         );
