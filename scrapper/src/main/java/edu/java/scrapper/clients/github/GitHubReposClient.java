@@ -6,14 +6,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Builder
 public class GitHubReposClient implements GitHubClient {
-    private final String baseUrl;
+    private final WebClient webClient;
 
     @Override
     public ReposResponseDto fetchUser(String owner, String repos) {
-        return WebClient
-            .builder()
-            .baseUrl(this.baseUrl)
-            .build()
+        return this.webClient
             .get()
             .uri("/repos/{owner}/{repos}", owner, repos)
             .retrieve()

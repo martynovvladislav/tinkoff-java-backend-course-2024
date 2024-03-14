@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.web.reactive.function.client.WebClient;
 import java.time.OffsetDateTime;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -18,16 +19,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 
 @WireMockTest(httpPort = 8080)
 public class StackOverflowClientTest {
-    private WebClientConfiguration webClientConfiguration;
-
-    @BeforeEach
-    void initialize() {
-        webClientConfiguration = Mockito.mock(WebClientConfiguration.class);
-        WebClientConfiguration.SOClientConfig soClientConfig = Mockito.mock(WebClientConfiguration.SOClientConfig.class);
-        Mockito.when(webClientConfiguration.soClientConfig()).thenReturn(soClientConfig);
-        Mockito.when(soClientConfig.baseUrl()).thenReturn("http://localhost:8080");
-    }
-
     @Test
     void fetchDataTest() {
         String expectedJsonBody = "{\"items\":[{\"title\":\"StackOverflow question example\", " +
@@ -39,7 +30,9 @@ public class StackOverflowClientTest {
                     .withBody(expectedJsonBody)
             )
         );
-        StackOverflowQuestionsClient stackOverflowQuestionsClient = new StackOverflowQuestionsClient(webClientConfiguration);
+        StackOverflowQuestionsClient stackOverflowQuestionsClient = StackOverflowQuestionsClient.builder()
+            .webClient(WebClient.builder().baseUrl("http://localhost:8080").build())
+            .build();
         QuestionResponse reposResponse = stackOverflowQuestionsClient.fetchData(
             "12345"
         );

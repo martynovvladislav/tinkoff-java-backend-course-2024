@@ -6,6 +6,7 @@ import edu.java.scrapper.clients.stackoverflow.StackOverflowQuestionsClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class ClientConfiguration {
@@ -18,16 +19,34 @@ public class ClientConfiguration {
 
     @Bean
     public GitHubReposClient gitHubReposClient() {
-        return GitHubReposClient.builder().baseUrl(webClientConfiguration.githubClientConfig().baseUrl()).build();
+        return GitHubReposClient.builder()
+            .webClient(
+                WebClient.builder()
+                .baseUrl(webClientConfiguration.githubClientConfig().getBaseUrl())
+                .build()
+            )
+            .build();
     }
 
     @Bean
     public StackOverflowQuestionsClient stackOverflowQuestionsClient() {
-        return new StackOverflowQuestionsClient(webClientConfiguration);
+        return StackOverflowQuestionsClient.builder()
+            .webClient(
+                WebClient.builder()
+                    .baseUrl(webClientConfiguration.soClientConfig().getBaseUrl())
+                    .build()
+            )
+            .build();
     }
 
     @Bean
     public BotClientImpl botClient() {
-        return new BotClientImpl(webClientConfiguration);
+        return BotClientImpl.builder()
+            .webClient(
+                WebClient.builder()
+                    .baseUrl(webClientConfiguration.botClientConfig().getBaseUrl())
+                    .build()
+            )
+            .build();
     }
 }
