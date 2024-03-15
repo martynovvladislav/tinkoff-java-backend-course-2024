@@ -3,7 +3,7 @@ app:
     enable: true
     interval: 10s
     force-check-delay: 10s
-    seconds-threshold: 60
+    seconds-threshold: 30
 
 springdoc:
   swagger-ui:

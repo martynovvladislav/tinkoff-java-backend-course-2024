@@ -27,7 +27,7 @@ public class LinkDtoRepositoryTests extends IntegrationTest {
     @Rollback
     void addLinkTest() {
         String url = "randomUrl";
-        LinkDto linkDto = new LinkDto(null, url, OffsetDateTime.now(), OffsetDateTime.now());
+        LinkDto linkDto = new LinkDto(null, url, OffsetDateTime.now(), OffsetDateTime.now(), null, null);
         linkRepository.add(linkDto);
         Assertions.assertTrue(linkRepository.findByUrl(url).isPresent());
     }
@@ -37,7 +37,7 @@ public class LinkDtoRepositoryTests extends IntegrationTest {
     @Rollback
     void deleteLinkTest() {
         String url = "randomUrl";
-        LinkDto linkDto = new LinkDto(null, url, OffsetDateTime.now(), OffsetDateTime.now());
+        LinkDto linkDto = new LinkDto(null, url, OffsetDateTime.now(), OffsetDateTime.now(), null, null);
         linkRepository.add(linkDto);
         Assertions.assertTrue(linkRepository.findByUrl(url).isPresent());
         linkRepository.delete(url);
@@ -50,8 +50,8 @@ public class LinkDtoRepositoryTests extends IntegrationTest {
     void findAllLinksTest() {
         String url = "randomUrl";
         String url2 = "randomUrl2";
-        LinkDto linkDto = new LinkDto(null, url, OffsetDateTime.now(), OffsetDateTime.now());
-        LinkDto linkDto2 = new LinkDto(null, url2, OffsetDateTime.now(), OffsetDateTime.now());
+        LinkDto linkDto = new LinkDto(null, url, OffsetDateTime.now(), OffsetDateTime.now(), null, null);
+        LinkDto linkDto2 = new LinkDto(null, url2, OffsetDateTime.now(), OffsetDateTime.now(), null, null);
         linkRepository.add(linkDto);
         linkRepository.add(linkDto2);
         List<LinkDto> linkDtoList = linkRepository.findAll();

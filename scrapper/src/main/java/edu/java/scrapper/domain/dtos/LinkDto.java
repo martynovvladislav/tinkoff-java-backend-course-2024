@@ -11,4 +11,6 @@ public class LinkDto {
     String url;
     OffsetDateTime updatedAt;
     OffsetDateTime lastCheckedAt;
+    String lastCommitSha;
+    Long answersCount;
 }

@@ -39,7 +39,7 @@ public class ChatDtoLinkRepositoryTestDto extends IntegrationTest {
     void addChatLinkTest() {
         Long tgChatId = 1L;
         chatRepository.add(tgChatId);
-        linkRepository.add(new LinkDto(null, "test", OffsetDateTime.now(), OffsetDateTime.now()));
+        linkRepository.add(new LinkDto(null, "test", OffsetDateTime.now(), OffsetDateTime.now(), null, null));
         Integer linkId = linkRepository.getLinkId("test");
 
         chatLinkRepository.add(tgChatId, linkId);
@@ -52,7 +52,7 @@ public class ChatDtoLinkRepositoryTestDto extends IntegrationTest {
     void deleteChatTest() {
         Long tgChatId = 1L;
         chatRepository.add(tgChatId);
-        linkRepository.add(new LinkDto(null, "test", OffsetDateTime.now(), OffsetDateTime.now()));
+        linkRepository.add(new LinkDto(null, "test", OffsetDateTime.now(), OffsetDateTime.now(), null, null));
         Integer linkId = linkRepository.getLinkId("test");
 
         chatLinkRepository.add(tgChatId, linkId);
@@ -68,12 +68,12 @@ public class ChatDtoLinkRepositoryTestDto extends IntegrationTest {
     void findAllChatsTest() {
         Long tgChatId = 1L;
         chatRepository.add(tgChatId);
-        linkRepository.add(new LinkDto(null, "test", OffsetDateTime.now(), OffsetDateTime.now()));
+        linkRepository.add(new LinkDto(null, "test", OffsetDateTime.now(), OffsetDateTime.now(), null, null));
         Integer linkId = linkRepository.getLinkId("test");
 
         Long tgChatId2 = 2L;
         chatRepository.add(tgChatId2);
-        linkRepository.add(new LinkDto(null, "test", OffsetDateTime.now(), OffsetDateTime.now()));
+        linkRepository.add(new LinkDto(null, "test", OffsetDateTime.now(), OffsetDateTime.now(), null, null));
 
         chatLinkRepository.add(tgChatId, linkId);
         chatLinkRepository.add(tgChatId2, linkId);

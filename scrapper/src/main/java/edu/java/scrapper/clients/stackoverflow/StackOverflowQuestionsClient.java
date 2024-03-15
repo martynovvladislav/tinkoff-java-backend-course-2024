@@ -1,5 +1,6 @@
 package edu.java.scrapper.clients.stackoverflow;
 
+import edu.java.scrapper.dtos.stackoverflow.AnswersResponse;
 import edu.java.scrapper.dtos.stackoverflow.QuestionResponse;
 import edu.java.scrapper.dtos.stackoverflow.QuestionsResponse;
 import java.util.Objects;
@@ -20,5 +21,17 @@ public class StackOverflowQuestionsClient implements StackOverflowClient {
                 .block())
             .questionResponseList()
             .getFirst();
+    }
+
+    @Override
+    public long fetchAnswers(String id) {
+        return Objects.requireNonNull(this.webClient
+                .get()
+                .uri("/questions/{id}/answers?site=stackoverflow", id)
+                .retrieve()
+                .bodyToMono(AnswersResponse.class)
+                .block())
+            .answersResponses()
+            .size();
     }
 }

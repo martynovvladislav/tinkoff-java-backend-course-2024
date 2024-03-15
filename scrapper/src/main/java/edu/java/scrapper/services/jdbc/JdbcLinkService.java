@@ -26,7 +26,7 @@ public class JdbcLinkService implements LinkService {
     public void add(long tgChatId, URI url, OffsetDateTime updatedAt) {
         String urlString = url.toString();
         if (linkRepository.findByUrl(url.toString()).isEmpty()) {
-            linkRepository.add(new LinkDto(null, urlString, updatedAt, OffsetDateTime.now()));
+            linkRepository.add(new LinkDto(null, urlString, updatedAt, OffsetDateTime.now(), "null", 0L));
         }
         Integer linkId = linkRepository.getLinkId(urlString);
         if (chatLinkRepository.find(tgChatId, linkId).isPresent()) {
