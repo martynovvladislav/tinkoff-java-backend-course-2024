@@ -1,10 +1,13 @@
-package edu.java.scrapper.integrationTests;
+package edu.java.scrapper.integrationTests.jdbc;
 
-import edu.java.scrapper.domain.repositories.ChatLinkRepository;
-import edu.java.scrapper.domain.repositories.ChatRepository;
-import edu.java.scrapper.domain.repositories.LinkRepository;
-import edu.java.scrapper.domain.dtos.ChatLinkDto;
-import edu.java.scrapper.domain.dtos.LinkDto;
+import edu.java.scrapper.domain.jdbc.dtos.ChatLinkDto;
+import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
+import edu.java.scrapper.domain.jdbc.repositories.JdbcChatLinkRepository;
+import edu.java.scrapper.domain.jdbc.repositories.JdbcChatRepository;
+import edu.java.scrapper.domain.jdbc.repositories.JdbcLinkRepository;
+import edu.java.scrapper.integrationTests.IntegrationTest;
+import java.time.OffsetDateTime;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,21 +15,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import java.time.OffsetDateTime;
-import java.util.List;
 
 @Testcontainers
 @SpringBootTest
-public class ChatDtoLinkRepositoryTestDto extends IntegrationTest {
-    private final ChatLinkRepository chatLinkRepository;
-    private final ChatRepository chatRepository;
-    private final LinkRepository linkRepository;
+public class ChatLinkRepositoryTests extends IntegrationTest {
+    private final JdbcChatLinkRepository chatLinkRepository;
+    private final JdbcChatRepository chatRepository;
+    private final JdbcLinkRepository linkRepository;
 
     @Autowired
-    public ChatDtoLinkRepositoryTestDto(
-        ChatLinkRepository chatLinkRepository,
-        ChatRepository chatRepository,
-        LinkRepository linkRepository
+    public ChatLinkRepositoryTests(
+        JdbcChatLinkRepository chatLinkRepository,
+        JdbcChatRepository chatRepository,
+        JdbcLinkRepository linkRepository
     ) {
         this.chatLinkRepository = chatLinkRepository;
         this.chatRepository = chatRepository;
@@ -40,7 +41,7 @@ public class ChatDtoLinkRepositoryTestDto extends IntegrationTest {
         Long tgChatId = 1L;
         chatRepository.add(tgChatId);
         linkRepository.add(new LinkDto(null, "test", OffsetDateTime.now(), OffsetDateTime.now(), null, null));
-        Integer linkId = linkRepository.getLinkId("test");
+        Long linkId = linkRepository.getLinkId("test");
 
         chatLinkRepository.add(tgChatId, linkId);
         Assertions.assertTrue(chatLinkRepository.find(tgChatId, linkId).isPresent());
@@ -53,7 +54,7 @@ public class ChatDtoLinkRepositoryTestDto extends IntegrationTest {
         Long tgChatId = 1L;
         chatRepository.add(tgChatId);
         linkRepository.add(new LinkDto(null, "test", OffsetDateTime.now(), OffsetDateTime.now(), null, null));
-        Integer linkId = linkRepository.getLinkId("test");
+        Long linkId = linkRepository.getLinkId("test");
 
         chatLinkRepository.add(tgChatId, linkId);
         Assertions.assertTrue(chatLinkRepository.find(tgChatId, linkId).isPresent());
@@ -69,11 +70,11 @@ public class ChatDtoLinkRepositoryTestDto extends IntegrationTest {
         Long tgChatId = 1L;
         chatRepository.add(tgChatId);
         linkRepository.add(new LinkDto(null, "test", OffsetDateTime.now(), OffsetDateTime.now(), null, null));
-        Integer linkId = linkRepository.getLinkId("test");
+        Long linkId = linkRepository.getLinkId("test");
 
         Long tgChatId2 = 2L;
         chatRepository.add(tgChatId2);
-        linkRepository.add(new LinkDto(null, "test", OffsetDateTime.now(), OffsetDateTime.now(), null, null));
+        linkRepository.add(new LinkDto(null, "test2", OffsetDateTime.now(), OffsetDateTime.now(), null, null));
 
         chatLinkRepository.add(tgChatId, linkId);
         chatLinkRepository.add(tgChatId2, linkId);

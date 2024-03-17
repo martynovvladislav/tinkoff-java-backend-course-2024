@@ -1,12 +1,11 @@
 package edu.java.scrapper.services;
 
-import edu.java.scrapper.domain.dtos.LinkDto;
+import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
 import java.net.URI;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 public interface LinkService {
-    void add(long tgChatId, URI url, OffsetDateTime updatedAt);
+    void add(Long tgChatId, URI url);
 
     void remove(long tgChatId, URI url);
 
@@ -16,5 +15,7 @@ public interface LinkService {
 
     void update(LinkDto linkDto);
 
-    List<Long> listAllByLinkId(Integer linkId);
+    List<Long> listAllByLinkId(Long linkId);
+
+
 }

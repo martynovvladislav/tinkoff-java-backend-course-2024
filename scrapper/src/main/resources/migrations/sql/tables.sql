@@ -11,7 +11,7 @@ create table chat
 (
     chat_id bigint primary key
 );
-create table connections
+create table chat_link
 (
     chat_id bigint references chat(chat_id),
     link_id bigint references link(id),

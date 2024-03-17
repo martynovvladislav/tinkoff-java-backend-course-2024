@@ -1,4 +1,4 @@
-package edu.java.scrapper.domain.dtos;
+package edu.java.scrapper.domain.jdbc.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

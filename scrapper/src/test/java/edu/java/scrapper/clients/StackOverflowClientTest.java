@@ -2,6 +2,7 @@ package edu.java.scrapper.clients;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import edu.java.scrapper.configuration.WebClientConfiguration;
+import edu.java.scrapper.dtos.stackoverflow.AnswerResponse;
 import edu.java.scrapper.dtos.stackoverflow.QuestionResponse;
 import edu.java.scrapper.clients.stackoverflow.StackOverflowQuestionsClient;
 import org.junit.jupiter.api.Assertions;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.web.reactive.function.client.WebClient;
 import java.time.OffsetDateTime;
+import java.util.List;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
@@ -55,14 +57,14 @@ import static com.github.tomakehurst.wiremock.client.WireMock.verify;
                 ":29433422,\"content_license\":\"CC BY-SA 3.0\"}],\"has_more\":false,\"quota_max\":300,\"quota_rema" +
                 "ining\":291}";
 
-        stubFor(get(urlEqualTo("/questions/12345?site=stackoverflow")).willReturn(aResponse().withHeader(
+        stubFor(get(urlEqualTo("/questions/12345/answers?site=stackoverflow")).willReturn(aResponse().withHeader(
             "Content-Type",
             "application/json"
         ).withBody(expectedBody)));
 
         StackOverflowQuestionsClient stackOverflowQuestionsClient = StackOverflowQuestionsClient.builder()
             .webClient(WebClient.builder().baseUrl("http://localhost:8080").build()).build();
-        Long answersAmount = stackOverflowQuestionsClient.fetchAnswers("12345");
-        Assertions.assertEquals(answersAmount, 3L);
+        List<AnswerResponse> answerResponses = stackOverflowQuestionsClient.fetchAnswers("12345");
+        Assertions.assertEquals(answerResponses.size(), 3L);
     }
 }

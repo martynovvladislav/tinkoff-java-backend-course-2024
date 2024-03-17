@@ -1,4 +1,4 @@
-package edu.java.scrapper.domain.dtos;
+package edu.java.scrapper.domain.jdbc.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,5 +7,5 @@ import lombok.Data;
 @Data
 public class ChatLinkDto {
     Long chatId;
-    Integer linkId;
+    Long linkId;
 }

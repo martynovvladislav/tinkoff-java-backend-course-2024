@@ -1,7 +1,7 @@
 package edu.java.scrapper.services.updaters;
 
 import edu.java.scrapper.clients.github.GitHubReposClient;
-import edu.java.scrapper.domain.dtos.LinkDto;
+import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
 import edu.java.scrapper.dtos.github.CommitResponseDto;
 import edu.java.scrapper.dtos.github.ReposResponseDto;
 import edu.java.scrapper.services.LinkService;
@@ -18,8 +18,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class GithubLinkUpdater implements LinkUpdater {
     private static final String HOST = "github.com";
-    private static final int OWNER_INDEX = 2;
-    private static final int REPOS_INDEX = 3;
+    private static final int OWNER_INDEX = 1;
+    private static final int REPOS_INDEX = 2;
     private final GitHubReposClient gitHubReposClient;
     private final LinkService linkService;
 

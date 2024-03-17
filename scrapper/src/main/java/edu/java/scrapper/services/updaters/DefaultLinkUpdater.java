@@ -1,6 +1,6 @@
 package edu.java.scrapper.services.updaters;
 
-import edu.java.scrapper.domain.dtos.LinkDto;
+import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
 import java.net.URI;
 import java.net.URISyntaxException;
 import lombok.RequiredArgsConstructor;

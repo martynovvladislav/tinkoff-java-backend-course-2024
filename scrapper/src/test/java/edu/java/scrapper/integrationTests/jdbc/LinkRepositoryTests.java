@@ -1,7 +1,8 @@
-package edu.java.scrapper.integrationTests;
+package edu.java.scrapper.integrationTests.jdbc;
 
-import edu.java.scrapper.domain.dtos.LinkDto;
-import edu.java.scrapper.domain.repositories.LinkRepository;
+import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
+import edu.java.scrapper.domain.jdbc.repositories.JdbcLinkRepository;
+import edu.java.scrapper.integrationTests.IntegrationTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,11 @@ import java.util.List;
 
 @Testcontainers
 @SpringBootTest
-public class LinkDtoRepositoryTests extends IntegrationTest {
-    private final LinkRepository linkRepository;
+public class LinkRepositoryTests extends IntegrationTest {
+    private final JdbcLinkRepository linkRepository;
 
     @Autowired
-    public LinkDtoRepositoryTests(LinkRepository linkRepository) {
+    public LinkRepositoryTests(JdbcLinkRepository linkRepository) {
         this.linkRepository = linkRepository;
     }
 
