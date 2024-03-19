@@ -1,10 +1,10 @@
-package edu.java.scrapper.configuration.webclientconfigs;
+package edu.java.scrapper.configuration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public abstract class AbstractWebClientConfig {
+public class WebClientProperties {
     String baseUrl;
 }
