@@ -10,7 +10,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class ClientConfiguration {
-    private WebClientConfiguration webClientConfiguration;
+    private final WebClientConfiguration webClientConfiguration;
 
     @Autowired
     public ClientConfiguration(WebClientConfiguration webClientConfiguration) {
@@ -22,7 +22,7 @@ public class ClientConfiguration {
         return GitHubReposClient.builder()
             .webClient(
                 WebClient.builder()
-                .baseUrl(webClientConfiguration.githubClientConfig().getBaseUrl())
+                .baseUrl(webClientConfiguration.githubClientProperties().getBaseUrl())
                 .build()
             )
             .build();
@@ -33,7 +33,7 @@ public class ClientConfiguration {
         return StackOverflowQuestionsClient.builder()
             .webClient(
                 WebClient.builder()
-                    .baseUrl(webClientConfiguration.soClientConfig().getBaseUrl())
+                    .baseUrl(webClientConfiguration.soClientProperties().getBaseUrl())
                     .build()
             )
             .build();
@@ -44,7 +44,7 @@ public class ClientConfiguration {
         return BotClientImpl.builder()
             .webClient(
                 WebClient.builder()
-                    .baseUrl(webClientConfiguration.botClientConfig().getBaseUrl())
+                    .baseUrl(webClientConfiguration.botClientProperties().getBaseUrl())
                     .build()
             )
             .build();
