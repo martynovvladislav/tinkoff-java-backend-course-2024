@@ -35,7 +35,10 @@ public class StackOverflowLinkUpdater implements LinkUpdater {
                     + answerResponses.get(0).getCreationDate() + ")";
             }
         }
-        if (!linkDto.getUpdatedAt().equals(questionResponse.lastActivityDate())) {
+        if (!linkDto.getUpdatedAt().toZonedDateTime().withNano(0)
+            .equals(questionResponse.lastActivityDate().toZonedDateTime()
+                .withZoneSameInstant(linkDto.getUpdatedAt().toZonedDateTime().getZone()).withNano(0))
+        ) {
             linkDto.setUpdatedAt(questionResponse.lastActivityDate());
             linkService.update(linkDto);
             return questionResponse.title() + " WAS UPDATED";

@@ -10,9 +10,7 @@ import edu.java.scrapper.exceptions.ChatDoesNotExistException;
 import edu.java.scrapper.services.ChatService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-@Service
 @RequiredArgsConstructor
 public class JooqChatService implements ChatService {
     private final JooqChatRepository chatRepository;

@@ -1,6 +1,7 @@
 package edu.java.bot.clients;
 
 import edu.java.bot.dtos.AddLinkRequestDto;
+import edu.java.bot.dtos.ApiErrorResponseDto;
 import edu.java.bot.dtos.LinkResponseDto;
 import edu.java.bot.dtos.ListLinkResponseDto;
 import edu.java.bot.dtos.RemoveLinkRequestDto;
@@ -12,7 +13,7 @@ public interface ScrapperClient {
 
     LinkResponseDto deleteLink(Long tgChatId, RemoveLinkRequestDto removeLinkRequestDto);
 
-    void registerChat(Long id);
+    ApiErrorResponseDto registerChat(Long id);
 
     void deleteChat(Long id);
 }
