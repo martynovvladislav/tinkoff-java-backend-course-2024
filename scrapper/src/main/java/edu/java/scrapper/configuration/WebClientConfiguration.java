@@ -8,18 +8,11 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "web-clients", ignoreUnknownFields = false)
 public record WebClientConfiguration(
     @Bean
-    GithubClientConfig githubClientConfig,
+    WebClientProperties githubClientProperties,
 
     @Bean
-    SOClientConfig soClientConfig,
+    WebClientProperties soClientProperties,
 
     @Bean
-    BotClientConfig botClientConfig
-
-) {
-    public record GithubClientConfig(String baseUrl) {}
-
-    public record SOClientConfig(String baseUrl) {}
-
-    public record BotClientConfig(String baseUrl) {}
-}
+    WebClientProperties botClientProperties
+) {}

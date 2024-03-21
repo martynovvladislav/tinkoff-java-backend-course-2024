@@ -7,15 +7,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
-public class ExceptionHandler {
+public class RestExceptionHandler {
     public static final String REQUEST_ERROR_DESCRIPTION = "Incorrect request parameters";
     public static final String CHAT_ERROR_DESCRIPTION = "Chat has not been found";
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponseDto> notValidArgument(MethodArgumentNotValidException e) {
         log.info(REQUEST_ERROR_DESCRIPTION);
         return new ResponseEntity<>(
@@ -32,7 +33,7 @@ public class ExceptionHandler {
         );
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(HttpMessageNotReadableException.class)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ApiErrorResponseDto> notReadableMessage(HttpMessageNotReadableException e) {
         log.info(REQUEST_ERROR_DESCRIPTION);
         return new ResponseEntity<>(
@@ -49,7 +50,7 @@ public class ExceptionHandler {
         );
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(ChatDoesNotExistException.class)
+    @ExceptionHandler(ChatDoesNotExistException.class)
     public ResponseEntity<ApiErrorResponseDto> wrongChatId(ChatDoesNotExistException e) {
         log.info(CHAT_ERROR_DESCRIPTION);
         return new ResponseEntity<>(

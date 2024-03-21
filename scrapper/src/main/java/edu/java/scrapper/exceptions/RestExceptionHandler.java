@@ -7,14 +7,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
-public class ExceptionHandler {
+public class RestExceptionHandler {
     private final static String REQUEST_EXCEPTION_DESCRIPTION = "Incorrect request parameters";
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponseDto> notValidArgument(MethodArgumentNotValidException e) {
         log.info("incorrect parameters exception");
         return new ResponseEntity<>(
@@ -31,7 +32,7 @@ public class ExceptionHandler {
             );
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(ChatDoesNotExistException.class)
+    @ExceptionHandler(ChatDoesNotExistException.class)
     public ResponseEntity<ApiErrorResponseDto> wrongChatId(ChatDoesNotExistException e) {
         log.info("chat does not exist exception");
         return new ResponseEntity<>(
@@ -48,7 +49,7 @@ public class ExceptionHandler {
         );
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(LinkAlreadyExistException.class)
+    @ExceptionHandler(LinkAlreadyExistException.class)
     public ResponseEntity<ApiErrorResponseDto> charAlreadyExist(LinkAlreadyExistException e) {
         log.info("link already exist exception");
         return new ResponseEntity<>(
@@ -65,7 +66,7 @@ public class ExceptionHandler {
         );
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(HttpMessageNotReadableException.class)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ApiErrorResponseDto> notReadableMessage(HttpMessageNotReadableException e) {
         log.info("Bad parameters");
         return new ResponseEntity<>(
