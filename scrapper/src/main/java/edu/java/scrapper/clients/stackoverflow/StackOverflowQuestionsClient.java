@@ -1,7 +1,10 @@
 package edu.java.scrapper.clients.stackoverflow;
 
+import edu.java.scrapper.dtos.stackoverflow.AnswerResponse;
+import edu.java.scrapper.dtos.stackoverflow.AnswersResponse;
 import edu.java.scrapper.dtos.stackoverflow.QuestionResponse;
 import edu.java.scrapper.dtos.stackoverflow.QuestionsResponse;
+import java.util.List;
 import java.util.Objects;
 import lombok.Builder;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -20,5 +23,16 @@ public class StackOverflowQuestionsClient implements StackOverflowClient {
                 .block())
             .questionResponseList()
             .getFirst();
+    }
+
+    @Override
+    public List<AnswerResponse> fetchAnswers(String id) {
+        return Objects.requireNonNull(this.webClient
+                .get()
+                .uri("/questions/{id}/answers?site=stackoverflow", id)
+                .retrieve()
+                .bodyToMono(AnswersResponse.class)
+                .block())
+            .answersResponses();
     }
 }

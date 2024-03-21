@@ -32,7 +32,7 @@ public class DatabaseTest extends IntegrationTest {
 
         Assertions.assertEquals(
             tables,
-            List.of("chat", "connections", "databasechangelog", "databasechangeloglock", "link")
+            List.of("chat", "chat_link", "databasechangelog", "databasechangeloglock", "link")
         );
     }
 }

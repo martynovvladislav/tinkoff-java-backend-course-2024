@@ -50,7 +50,7 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(LinkAlreadyExistException.class)
-    public ResponseEntity<ApiErrorResponseDto> charAlreadyExist(LinkAlreadyExistException e) {
+    public ResponseEntity<ApiErrorResponseDto> linkAlreadyExist(LinkAlreadyExistException e) {
         log.info("link already exist exception");
         return new ResponseEntity<>(
             new ApiErrorResponseDto(
@@ -72,6 +72,40 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(
             new ApiErrorResponseDto(
                 REQUEST_EXCEPTION_DESCRIPTION,
+                String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                e.getClass().getSimpleName(),
+                e.getLocalizedMessage(),
+                Arrays.stream(e.getStackTrace())
+                    .map(StackTraceElement::toString)
+                    .toList()
+            ),
+            HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(ChatAlreadyExistException.class)
+    public ResponseEntity<ApiErrorResponseDto> chatAlreadyExist(ChatAlreadyExistException e) {
+        log.info("chat already exist");
+        return new ResponseEntity<>(
+            new ApiErrorResponseDto(
+                "Chat already exist",
+                String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                e.getClass().getSimpleName(),
+                e.getLocalizedMessage(),
+                Arrays.stream(e.getStackTrace())
+                    .map(StackTraceElement::toString)
+                    .toList()
+            ),
+            HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(LinkDoesNotExistException.class)
+    public ResponseEntity<ApiErrorResponseDto> linkDoesNotExist(LinkDoesNotExistException e) {
+        log.info("link does not exist exception");
+        return new ResponseEntity<>(
+            new ApiErrorResponseDto(
+                "link does not exist",
                 String.valueOf(HttpStatus.BAD_REQUEST.value()),
                 e.getClass().getSimpleName(),
                 e.getLocalizedMessage(),
