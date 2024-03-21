@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Builder
 public class StackOverflowQuestionsClient implements StackOverflowClient {
     private final WebClient webClient;
-  
+
     @Override
     public QuestionResponse fetchData(String id) {
         return Objects.requireNonNull(this.webClient
