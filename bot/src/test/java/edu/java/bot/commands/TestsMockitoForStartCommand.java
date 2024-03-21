@@ -27,7 +27,7 @@ public class TestsMockitoForStartCommand extends TestsMockitoInitializer {
         Assertions.assertEquals(
             sendMessage.getParameters().get("text"),
             "Hello, " + "TestUser!\n" +
-                "Welcome to the Link Listener Bot. This bot can help you to track updates on the web links\n" +
+                "Welcome to the Link Listener Bot. This bot can help you track updates on the web links\n" +
                 "Use /help to see available commands"
         );
         Assertions.assertEquals(
