@@ -2,7 +2,6 @@ package edu.java.bot.clients;
 
 import edu.java.bot.configuration.WebClientConfiguration;
 import edu.java.bot.dtos.AddLinkRequestDto;
-import edu.java.bot.dtos.ApiErrorResponseDto;
 import edu.java.bot.dtos.LinkResponseDto;
 import edu.java.bot.dtos.ListLinkResponseDto;
 import edu.java.bot.dtos.RemoveLinkRequestDto;
@@ -59,11 +58,11 @@ public class ScrapperClientImpl implements ScrapperClient {
     }
 
     @Override
-    public ApiErrorResponseDto registerChat(Long id) {
-        return webClient.post()
+    public void registerChat(Long id) {
+        webClient.post()
             .uri(TG_ENDPOINT, id)
             .retrieve()
-            .bodyToMono(ApiErrorResponseDto.class)
+            .bodyToMono(Void.class)
             .block();
     }
 
