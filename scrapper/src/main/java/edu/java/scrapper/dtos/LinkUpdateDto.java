@@ -12,14 +12,11 @@ import org.jetbrains.annotations.NotNull;
 @Data
 public class LinkUpdateDto {
     @NotNull
-    Long id;
-
-    @NotNull
     URI url;
 
     @NotNull
     String description;
 
     @NotNull
-    List<Integer> tgChatIds;
+    List<Long> tgChatIds;
 }
