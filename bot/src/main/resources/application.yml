@@ -1,6 +1,10 @@
 app:
   telegram-token: ${BOT_API_KEY}
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+
 spring:
   application:
     name: bot
@@ -12,3 +16,7 @@ server:
 
 logging:
   config: classpath:log4j2-plain.xml
+
+web-clients:
+  scrapper-client-config:
+    base-url: ${SCRAPPER_BASE_URL:http://localhost:8080}
