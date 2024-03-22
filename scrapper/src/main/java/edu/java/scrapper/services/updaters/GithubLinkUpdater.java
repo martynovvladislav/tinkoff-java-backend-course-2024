@@ -37,17 +37,18 @@ public class GithubLinkUpdater implements LinkUpdater {
                 linkDto.setUpdatedAt(responseDto.updatedAt());
                 linkDto.setLastCommitSha(commitResponseDto.get().sha());
                 linkService.update(linkDto);
-                return responseDto.fullName() + " WAS UPDATED:\n" + commitResponseDto.get().commit().message();
+                return responseDto.fullName() + "\n--\nWAS UPDATED\n--\n" + commitResponseDto.get().commit().message()
+                    + "\n--";
             }
         }
 
         if (!responseDto.updatedAt().toZonedDateTime().withZoneSameInstant(
-            linkDto.getUpdatedAt().toZonedDateTime().getZone()).withNano(0)
+                linkDto.getUpdatedAt().toZonedDateTime().getZone()).withNano(0)
             .equals(linkDto.getUpdatedAt().toZonedDateTime().withNano(0))
         ) {
             linkDto.setUpdatedAt(responseDto.updatedAt());
             linkService.update(linkDto);
-            return responseDto.fullName() + " WAS UPDATED";
+            return responseDto.fullName() + "\n--\nWAS UPDATED\n--";
         }
         linkService.update(linkDto);
         return null;
