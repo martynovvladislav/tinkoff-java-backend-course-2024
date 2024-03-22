@@ -2,6 +2,7 @@ package edu.java.scrapper.controllersTests;
 
 import edu.java.scrapper.controllers.ChatController;
 import edu.java.scrapper.services.ChatService;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,8 +10,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -24,19 +27,18 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(MockitoExtension.class)
+@WebMvcTest(ChatController.class)
 public class ChatControllerTests {
+    @Autowired
     private MockMvc mockMvc;
 
-    @Mock
+    @MockBean
     ChatService chatService;
 
-    @InjectMocks
-    ChatController chatController;
-
     @BeforeEach
-    public void initialize() {
-        mockMvc = MockMvcBuilders.standaloneSetup(chatController).build();
+    void initialize() {
+        doNothing().when(chatService).register(anyLong());
+        doNothing().when(chatService).unregister(anyLong());
     }
 
     @Test
