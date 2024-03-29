@@ -8,7 +8,5 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "web-clients", ignoreUnknownFields = false)
 public record WebClientConfiguration(
     @Bean
-    ScrapperClientConfig scrapperClientConfig
-) {
-    public record ScrapperClientConfig(String baseUrl) {}
-}
+    WebClientProperties scrapperClientProperties
+) {}

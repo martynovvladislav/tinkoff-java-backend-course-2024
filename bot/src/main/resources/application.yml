@@ -18,5 +18,10 @@ logging:
   config: classpath:log4j2-plain.xml
 
 web-clients:
-  scrapper-client-config:
+  scrapper-client-properties:
     base-url: ${SCRAPPER_BASE_URL:http://localhost:8080}
+    retry-attempts: ${SCRAPPER_RETRY_ATTEMPTS:4}
+    retry-duration: ${SCRAPPER_RETRY_DURATION:2} #seconds
+    retry-policy: ${SCRAPPER_RETRY_POLICY:constant} #values: linear, exponential, constant
+    retry-codes:
+      - 404

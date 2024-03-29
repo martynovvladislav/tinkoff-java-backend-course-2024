@@ -1,4 +1,4 @@
-package edu.java.scrapper.configuration;
+package edu.java.bot.configuration;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

@@ -3,7 +3,7 @@ app:
     enable: true
     interval: 10s
     force-check-delay: 10s
-    seconds-threshold: 30
+    seconds-threshold: 30 #seconds
   database-access-type: jpa
 
 springdoc:
@@ -32,7 +32,32 @@ logging:
 web-clients:
   github-client-properties:
     base-url: ${GITHUB_BASE_URL:https://api.github.com}
+    retry-attempts: ${GITHUB_RETRY_ATTEMPTS:4}
+    retry-duration: ${GITHUB_RETRY_DURATION:2} #seconds
+    retry-policy: ${GITHUB_RETRY_POLICY:constant} #values: linear, exponential, constant
+    retry-codes:
+      - 404
   so-client-properties:
     base-url: ${SO_BASE_URL:https://api.stackexchange.com}
+    retry-attempts: ${SO_RETRY_ATTEMPTS:3}
+    retry-duration: ${SO_RETRY_DURATION:2} #seconds
+    retry-policy: ${SO_RETRY_POLICY:constant} #values: linear, exponential, constant
+    retry-codes:
+      - 404
   bot-client-properties:
     base-url: ${BOT_BASE_URL:http://localhost:8090}
+    retry-attempts: ${BOT_RETRY_ATTEMPTS:3}
+    retry-duration: ${BOT_RETRY_DURATION:2} #seconds
+    retry-policy: ${BOT_RETRY_POLICY:constant} #values: linear, exponential, constant
+    retry-codes:
+      - 404
+
+bucket:
+  refill-size: 5
+  refill-interval: 1 #minutes
+  capacity: 5
+
+bucket-cache:
+  max-size: 100
+  expiration-time: 10 #minutes
+

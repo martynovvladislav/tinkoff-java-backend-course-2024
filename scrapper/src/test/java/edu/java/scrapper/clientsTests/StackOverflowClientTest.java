@@ -7,6 +7,7 @@ import edu.java.scrapper.clients.stackoverflow.StackOverflowQuestionsClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.util.retry.Retry;
 import java.time.OffsetDateTime;
 import java.util.List;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
@@ -25,8 +26,10 @@ import static com.github.tomakehurst.wiremock.client.WireMock.verify;
             "application/json"
         ).withBody(expectedJsonBody)));
         StackOverflowQuestionsClient stackOverflowQuestionsClient = StackOverflowQuestionsClient.builder()
-            .webClient(WebClient.builder().baseUrl("http://localhost:8080").build()).build();
-        QuestionResponse reposResponse = stackOverflowQuestionsClient.fetchData("12345");
+            .webClient(WebClient.builder().baseUrl("http://localhost:8080").build())
+            .retryInstance(Retry.max(1))
+            .build();
+        QuestionResponse reposResponse = stackOverflowQuestionsClient.fetchData("12345").get();
 
         Assertions.assertEquals(reposResponse.title(), "StackOverflow question example");
         Assertions.assertEquals(reposResponse.lastActivityDate(), OffsetDateTime.parse("2021-11-26T08:12:18Z"));
@@ -60,7 +63,9 @@ import static com.github.tomakehurst.wiremock.client.WireMock.verify;
         ).withBody(expectedBody)));
 
         StackOverflowQuestionsClient stackOverflowQuestionsClient = StackOverflowQuestionsClient.builder()
-            .webClient(WebClient.builder().baseUrl("http://localhost:8080").build()).build();
+            .webClient(WebClient.builder().baseUrl("http://localhost:8080").build())
+            .retryInstance(Retry.max(1))
+            .build();
         List<AnswerResponse> answerResponses = stackOverflowQuestionsClient.fetchAnswers("12345");
         Assertions.assertEquals(answerResponses.size(), 3L);
     }

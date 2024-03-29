@@ -37,10 +37,18 @@ public class StartCommand implements Command {
         try {
             scrapperClient.registerChat(message.chat().id());
         } catch (WebClientResponseException e) {
-            ApiErrorResponseDto apiErrorResponse = e.getResponseBodyAs(ApiErrorResponseDto.class);
+            String msg = e.getLocalizedMessage();
+            if (!(e.getResponseBodyAs(ApiErrorResponseDto.class) == null)) {
+                msg = e.getResponseBodyAs(ApiErrorResponseDto.class).getDescription();
+            }
+            sendMessage = new SendMessage(
+                update.message().chat().id(),
+                msg
+            );
+        } catch (Exception e) {
             sendMessage = new SendMessage(
                 message.chat().id(),
-                apiErrorResponse.getDescription()
+                e.getLocalizedMessage()
             );
         }
 

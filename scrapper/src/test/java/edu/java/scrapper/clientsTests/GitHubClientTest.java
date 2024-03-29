@@ -8,6 +8,7 @@ import java.time.OffsetDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.util.retry.Retry;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
@@ -31,10 +32,11 @@ public class GitHubClientTest {
         );
         GitHubReposClient gitHubReposClient = GitHubReposClient.builder()
             .webClient(WebClient.builder().baseUrl("http://localhost:8080").build())
+            .retryInstance(Retry.max(1))
             .build();
         ReposResponseDto reposResponseDto = gitHubReposClient.fetchUser(
             "martynovvladislav", "tinkoff-java-backend-course-2024"
-        );
+        ).get();
 
         Assertions.assertEquals(reposResponseDto.id(), 753126272);
         Assertions.assertEquals(reposResponseDto.fullName(), "martynovvladislav/tinkoff-java-backend-course-2024");
@@ -132,6 +134,7 @@ public class GitHubClientTest {
 
         GitHubReposClient gitHubReposClient = GitHubReposClient.builder()
             .webClient(WebClient.builder().baseUrl("http://localhost:8080").build())
+            .retryInstance(Retry.max(1))
             .build();
         CommitResponseDto commitResponseDto = gitHubReposClient.fetchCommit("martynovvladislav", "tinkoff-java-backend-course-2024").get();
 

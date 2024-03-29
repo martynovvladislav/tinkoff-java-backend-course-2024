@@ -116,4 +116,38 @@ public class RestExceptionHandler {
             HttpStatus.BAD_REQUEST
         );
     }
+
+    @ExceptionHandler(TooManyRequestsException.class)
+    public ResponseEntity<ApiErrorResponseDto> tooManyRequests(TooManyRequestsException e) {
+        log.info("user has bucket limit currently");
+        return new ResponseEntity<>(
+            new ApiErrorResponseDto(
+                "too many requests, try again in 1 minute",
+                String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                e.getClass().getSimpleName(),
+                e.getLocalizedMessage(),
+                Arrays.stream(e.getStackTrace())
+                    .map(StackTraceElement::toString)
+                    .toList()
+            ),
+            HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(BadLinkException.class)
+    public ResponseEntity<ApiErrorResponseDto> badLink(BadLinkException e) {
+        log.info("user has entered bad link");
+        return new ResponseEntity<>(
+            new ApiErrorResponseDto(
+                "incorrect link format, try another",
+                String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                e.getClass().getSimpleName(),
+                e.getLocalizedMessage(),
+                Arrays.stream(e.getStackTrace())
+                    .map(StackTraceElement::toString)
+                    .toList()
+            ),
+            HttpStatus.BAD_REQUEST
+        );
+    }
 }

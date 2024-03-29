@@ -26,31 +26,34 @@ public class GithubLinkUpdater implements LinkUpdater {
     @Override
     public String update(LinkDto linkDto) throws URISyntaxException {
         List<String> pathArgs = Arrays.stream(new URI(linkDto.getUrl()).getPath().split("/")).toList();
-        ReposResponseDto responseDto =
+        Optional<ReposResponseDto> responseDto =
             gitHubReposClient.fetchUser(pathArgs.get(OWNER_INDEX), pathArgs.get(REPOS_INDEX));
-        Optional<CommitResponseDto> commitResponseDto =
-            gitHubReposClient.fetchCommit(pathArgs.get(OWNER_INDEX), pathArgs.get(REPOS_INDEX));
-        linkDto.setLastCheckedAt(OffsetDateTime.now());
-        if (commitResponseDto.isPresent()) {
-            if (linkDto.getLastCommitSha() == null
-                || !commitResponseDto.get().sha().equals(linkDto.getLastCommitSha())) {
-                linkDto.setUpdatedAt(responseDto.updatedAt());
-                linkDto.setLastCommitSha(commitResponseDto.get().sha());
-                linkService.update(linkDto);
-                return responseDto.fullName() + "\n--\nWAS UPDATED\n--\n" + commitResponseDto.get().commit().message()
-                    + "\n--";
+        if (responseDto.isPresent()) {
+            Optional<CommitResponseDto> commitResponseDto =
+                gitHubReposClient.fetchCommit(pathArgs.get(OWNER_INDEX), pathArgs.get(REPOS_INDEX));
+            linkDto.setLastCheckedAt(OffsetDateTime.now());
+            if (commitResponseDto.isPresent()) {
+                if (linkDto.getLastCommitSha() == null
+                    || !commitResponseDto.get().sha().equals(linkDto.getLastCommitSha())) {
+                    linkDto.setUpdatedAt(responseDto.get().updatedAt());
+                    linkDto.setLastCommitSha(commitResponseDto.get().sha());
+                    linkService.update(linkDto);
+                    return responseDto.get().fullName() + "\n--\nWAS UPDATED\n--\n"
+                        + commitResponseDto.get().commit().message()
+                        + "\n--";
+                }
             }
-        }
 
-        if (!responseDto.updatedAt().toZonedDateTime().withZoneSameInstant(
-                linkDto.getUpdatedAt().toZonedDateTime().getZone()).withNano(0)
-            .equals(linkDto.getUpdatedAt().toZonedDateTime().withNano(0))
-        ) {
-            linkDto.setUpdatedAt(responseDto.updatedAt());
+            if (!responseDto.get().updatedAt().toZonedDateTime().withZoneSameInstant(
+                    linkDto.getUpdatedAt().toZonedDateTime().getZone()).withNano(0)
+                .equals(linkDto.getUpdatedAt().toZonedDateTime().withNano(0))
+            ) {
+                linkDto.setUpdatedAt(responseDto.get().updatedAt());
+                linkService.update(linkDto);
+                return responseDto.get().fullName() + "\n--\nWAS UPDATED\n--";
+            }
             linkService.update(linkDto);
-            return responseDto.fullName() + "\n--\nWAS UPDATED\n--";
         }
-        linkService.update(linkDto);
         return null;
     }
 
