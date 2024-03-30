@@ -1,6 +1,6 @@
 package edu.java.scrapper.controllers;
 
-import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import edu.java.scrapper.dtos.AddLinkRequestDto;
 import edu.java.scrapper.dtos.LinkResponseDto;
 import edu.java.scrapper.dtos.ListLinkResponseDto;

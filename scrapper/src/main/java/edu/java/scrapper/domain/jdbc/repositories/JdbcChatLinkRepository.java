@@ -1,6 +1,6 @@
 package edu.java.scrapper.domain.jdbc.repositories;
 
-import edu.java.scrapper.domain.jdbc.dtos.ChatLinkDto;
+import edu.java.scrapper.domain.dtos.ChatLinkDto;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +30,14 @@ public class JdbcChatLinkRepository {
     public List<ChatLinkDto> findAll() {
         String sql = "SELECT * FROM chat_link";
         return jdbcClient.sql(sql)
+            .query(ChatLinkDto.class)
+            .list();
+    }
+
+    public List<ChatLinkDto> findAllByLinkId(Long linkId) {
+        String sql = "SELECT * FROM chat_link WHERE link_id = ?";
+        return jdbcClient.sql(sql)
+            .params(linkId)
             .query(ChatLinkDto.class)
             .list();
     }

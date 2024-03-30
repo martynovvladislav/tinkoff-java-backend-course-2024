@@ -1,6 +1,6 @@
 package edu.java.scrapper.integrationTests.repositories.jdbc;
 
-import edu.java.scrapper.domain.jdbc.dtos.ChatDto;
+import edu.java.scrapper.domain.dtos.ChatDto;
 import edu.java.scrapper.domain.jdbc.repositories.JdbcChatRepository;
 import edu.java.scrapper.integrationTests.IntegrationTest;
 import org.junit.jupiter.api.Assertions;

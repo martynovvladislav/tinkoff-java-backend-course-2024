@@ -1,6 +1,7 @@
 package edu.java.scrapper.domain.jdbc.repositories;
 
-import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
+import edu.java.scrapper.domain.dtos.LinkDto;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +63,15 @@ public class JdbcLinkRepository {
     public List<LinkDto> findAll() {
         String sql = "SELECT * FROM link";
         return jdbcClient.sql(sql)
+            .query(LinkDto.class)
+            .list();
+    }
+
+    public List<LinkDto> findOld(long secondThreshold) {
+        OffsetDateTime thresholdTime = OffsetDateTime.now().minusSeconds(secondThreshold);
+        String sql = "SELECT * FROM link WHERE last_checked_at <= ?";
+        return jdbcClient.sql(sql)
+            .params(thresholdTime)
             .query(LinkDto.class)
             .list();
     }

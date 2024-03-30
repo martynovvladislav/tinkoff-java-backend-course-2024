@@ -1,6 +1,6 @@
 package edu.java.scrapper.services;
 
-import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import java.net.URI;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package edu.java.scrapper.domain.jdbc.repositories;
 
-import edu.java.scrapper.domain.jdbc.dtos.ChatDto;
+import edu.java.scrapper.domain.dtos.ChatDto;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
