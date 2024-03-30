@@ -1,7 +1,7 @@
 package edu.java.scrapper.services.jdbc;
 
-import edu.java.scrapper.domain.jdbc.dtos.ChatLinkDto;
-import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
+import edu.java.scrapper.domain.dtos.ChatLinkDto;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import edu.java.scrapper.domain.jdbc.repositories.JdbcChatLinkRepository;
 import edu.java.scrapper.domain.jdbc.repositories.JdbcLinkRepository;
 import edu.java.scrapper.exceptions.LinkAlreadyExistException;
@@ -9,7 +9,6 @@ import edu.java.scrapper.exceptions.LinkDoesNotExistException;
 import edu.java.scrapper.services.LinkService;
 import java.net.URI;
 import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,7 +63,7 @@ public class JdbcLinkService implements LinkService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<LinkDto> listAll(long tgChatId) {
         return chatLinkRepository.findAll().stream()
             .filter(chatLinkDto -> chatLinkDto.getChatId().equals(tgChatId))
@@ -73,27 +72,17 @@ public class JdbcLinkService implements LinkService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Long> listAllByLinkId(Long linkId) {
-        return chatLinkRepository.findAll().stream()
-            .filter(chatLinkDto -> chatLinkDto.getLinkId().equals(linkId))
+        return chatLinkRepository.findAllByLinkId(linkId).stream()
             .map(ChatLinkDto::getChatId)
             .toList();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<LinkDto> findOld(long secondThreshold) {
-        return linkRepository.findAll().stream()
-            .filter(
-                link -> {
-                    OffsetDateTime current = OffsetDateTime.now();
-                    OffsetDateTime lastCheckedTime = link.getLastCheckedAt();
-                    long secondsPassed = ChronoUnit.SECONDS.between(lastCheckedTime, current);
-                    return secondsPassed >= secondThreshold;
-                }
-            )
-            .toList();
+        return linkRepository.findOld(secondThreshold);
     }
 
     @Override

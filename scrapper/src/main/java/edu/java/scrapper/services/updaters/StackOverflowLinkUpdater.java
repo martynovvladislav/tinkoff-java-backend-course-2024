@@ -1,7 +1,7 @@
 package edu.java.scrapper.services.updaters;
 
 import edu.java.scrapper.clients.stackoverflow.StackOverflowQuestionsClient;
-import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import edu.java.scrapper.dtos.stackoverflow.AnswerResponse;
 import edu.java.scrapper.dtos.stackoverflow.QuestionResponse;
 import edu.java.scrapper.services.LinkService;
