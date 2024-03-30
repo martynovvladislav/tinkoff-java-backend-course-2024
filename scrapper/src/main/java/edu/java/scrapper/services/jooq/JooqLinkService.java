@@ -1,6 +1,6 @@
 package edu.java.scrapper.services.jooq;
 
-import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import edu.java.scrapper.domain.jooq.repositories.JooqChatLinkRepository;
 import edu.java.scrapper.domain.jooq.repositories.JooqLinkRepository;
 import edu.java.scrapper.domain.jooq.tables.pojos.ChatLink;
@@ -14,6 +14,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class JooqLinkService implements LinkService {
     private final JooqChatLinkRepository chatLinkRepository;
 
     @Override
+    @Transactional
     public void add(Long tgChatId, URI url) {
         String urlString = url.toString();
         Link link = new Link(
@@ -44,6 +46,7 @@ public class JooqLinkService implements LinkService {
     }
 
     @Override
+    @Transactional
     public void remove(long tgChatId, URI url) {
         if (linkRepository.findByUrl(url.toString()).isEmpty()) {
             throw new LinkDoesNotExistException();
@@ -63,6 +66,7 @@ public class JooqLinkService implements LinkService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<LinkDto> listAll(long tgChatId) {
         return chatLinkRepository.findAll().stream()
             .filter(chatLink -> chatLink.getChatId().equals(tgChatId))
@@ -79,6 +83,7 @@ public class JooqLinkService implements LinkService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<LinkDto> findOld(long secondThreshold) {
         return linkRepository.findAll().stream()
             .filter(
@@ -101,6 +106,7 @@ public class JooqLinkService implements LinkService {
     }
 
     @Override
+    @Transactional
     public void update(LinkDto linkDto) {
         linkRepository.update(
             new Link(
@@ -115,6 +121,7 @@ public class JooqLinkService implements LinkService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Long> listAllByLinkId(Long linkId) {
         return chatLinkRepository.findAll().stream()
             .filter(chatLinkDto -> chatLinkDto.getLinkId().equals(linkId))

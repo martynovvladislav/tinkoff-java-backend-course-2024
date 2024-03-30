@@ -1,7 +1,7 @@
 package edu.java.scrapper.services.updaters;
 
 import edu.java.scrapper.clients.github.GitHubReposClient;
-import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import edu.java.scrapper.dtos.github.CommitResponseDto;
 import edu.java.scrapper.dtos.github.ReposResponseDto;
 import edu.java.scrapper.services.LinkService;

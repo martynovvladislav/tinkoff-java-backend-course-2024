@@ -1,7 +1,7 @@
 package edu.java.scrapper;
 
 import edu.java.scrapper.clients.bot.BotClientImpl;
-import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import edu.java.scrapper.dtos.LinkUpdateDto;
 import edu.java.scrapper.services.LinkService;
 import edu.java.scrapper.services.updaters.LinkUpdater;

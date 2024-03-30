@@ -49,24 +49,81 @@ public class GitHubClientTest {
     void fetchCommitTest() {
         String expectedBody = "[\n" +
             "  {\n" +
-            "    \"sha\": \"e310dfb3d21f1a3f07b5fa8267e9f7c2e3f30b15\",\n" +
+            "    \"sha\": \"7e848e08c30bce03dcc210368cfbd0eb9553311f\",\n" +
+            "    \"node_id\": \"C_kwDOK9VpKNoAKDdlODQ4ZTA4YzMwYmNlMDNkY2MyMTAzNjhjZmJkMGViOTU1MzMxMWY\",\n" +
             "    \"commit\": {\n" +
             "      \"author\": {\n" +
-            "        \"name\": \"Vladislav\",\n" +
-            "        \"email\": \"53814545+martynovvladislav@users.noreply.github.com\",\n" +
-            "        \"date\": \"2024-03-08T13:22:42Z\"\n" +
+            "        \"name\": \"Vlad\",\n" +
+            "        \"email\": \"martynovq03@gmail.com\",\n" +
+            "        \"date\": \"2023-12-24T20:06:57Z\"\n" +
             "      },\n" +
             "      \"committer\": {\n" +
-            "        \"name\": \"GitHub\",\n" +
-            "        \"email\": \"noreply@github.com\",\n" +
-            "        \"date\": \"2024-03-08T13:22:42Z\"\n" +
+            "        \"name\": \"Vlad\",\n" +
+            "        \"email\": \"martynovq03@gmail.com\",\n" +
+            "        \"date\": \"2023-12-24T20:06:57Z\"\n" +
             "      },\n" +
-            "      \"message\": \"Merge pull request #2 from martynovvladislav/hw2\\n\\nhw2 PR\",\n" +
+            "      \"message\": \"labs\",\n" +
             "      \"tree\": {\n" +
-            "        \"sha\": \"bb4e8582f57ca0f8e79b682d7318a1680da6e1e1\",\n" +
-            "        \"url\": \"https://api.github.com/repos/martynovvladislav/tinkoff-java-backend-course-2024/git/trees/bb4e8582f57ca0f8e79b682d7318a1680da6e1e1\"\n" +
+            "        \"sha\": \"12e356db635d8b5c80d3986d6cba099197f114d0\",\n" +
+            "        \"url\": \"https://api.github.com/repos/martynovvladislav/JavaLabs/git/trees/12e356db635d8b5c80d3986d6cba099197f114d0\"\n" +
+            "      },\n" +
+            "      \"url\": \"https://api.github.com/repos/martynovvladislav/JavaLabs/git/commits/7e848e08c30bce03dcc210368cfbd0eb9553311f\",\n" +
+            "      \"comment_count\": 0,\n" +
+            "      \"verification\": {\n" +
+            "        \"verified\": false,\n" +
+            "        \"reason\": \"unsigned\",\n" +
+            "        \"signature\": null,\n" +
+            "        \"payload\": null\n" +
             "      }\n" +
-            "  }]";
+            "    },\n" +
+            "    \"url\": \"https://api.github.com/repos/martynovvladislav/JavaLabs/commits/7e848e08c30bce03dcc210368cfbd0eb9553311f\",\n" +
+            "    \"html_url\": \"https://github.com/martynovvladislav/JavaLabs/commit/7e848e08c30bce03dcc210368cfbd0eb9553311f\",\n" +
+            "    \"comments_url\": \"https://api.github.com/repos/martynovvladislav/JavaLabs/commits/7e848e08c30bce03dcc210368cfbd0eb9553311f/comments\",\n" +
+            "    \"author\": {\n" +
+            "      \"login\": \"martynovvladislav\",\n" +
+            "      \"id\": 53814545,\n" +
+            "      \"node_id\": \"MDQ6VXNlcjUzODE0NTQ1\",\n" +
+            "      \"avatar_url\": \"https://avatars.githubusercontent.com/u/53814545?v=4\",\n" +
+            "      \"gravatar_id\": \"\",\n" +
+            "      \"url\": \"https://api.github.com/users/martynovvladislav\",\n" +
+            "      \"html_url\": \"https://github.com/martynovvladislav\",\n" +
+            "      \"followers_url\": \"https://api.github.com/users/martynovvladislav/followers\",\n" +
+            "      \"following_url\": \"https://api.github.com/users/martynovvladislav/following{/other_user}\",\n" +
+            "      \"gists_url\": \"https://api.github.com/users/martynovvladislav/gists{/gist_id}\",\n" +
+            "      \"starred_url\": \"https://api.github.com/users/martynovvladislav/starred{/owner}{/repo}\",\n" +
+            "      \"subscriptions_url\": \"https://api.github.com/users/martynovvladislav/subscriptions\",\n" +
+            "      \"organizations_url\": \"https://api.github.com/users/martynovvladislav/orgs\",\n" +
+            "      \"repos_url\": \"https://api.github.com/users/martynovvladislav/repos\",\n" +
+            "      \"events_url\": \"https://api.github.com/users/martynovvladislav/events{/privacy}\",\n" +
+            "      \"received_events_url\": \"https://api.github.com/users/martynovvladislav/received_events\",\n" +
+            "      \"type\": \"User\",\n" +
+            "      \"site_admin\": false\n" +
+            "    },\n" +
+            "    \"committer\": {\n" +
+            "      \"login\": \"martynovvladislav\",\n" +
+            "      \"id\": 53814545,\n" +
+            "      \"node_id\": \"MDQ6VXNlcjUzODE0NTQ1\",\n" +
+            "      \"avatar_url\": \"https://avatars.githubusercontent.com/u/53814545?v=4\",\n" +
+            "      \"gravatar_id\": \"\",\n" +
+            "      \"url\": \"https://api.github.com/users/martynovvladislav\",\n" +
+            "      \"html_url\": \"https://github.com/martynovvladislav\",\n" +
+            "      \"followers_url\": \"https://api.github.com/users/martynovvladislav/followers\",\n" +
+            "      \"following_url\": \"https://api.github.com/users/martynovvladislav/following{/other_user}\",\n" +
+            "      \"gists_url\": \"https://api.github.com/users/martynovvladislav/gists{/gist_id}\",\n" +
+            "      \"starred_url\": \"https://api.github.com/users/martynovvladislav/starred{/owner}{/repo}\",\n" +
+            "      \"subscriptions_url\": \"https://api.github.com/users/martynovvladislav/subscriptions\",\n" +
+            "      \"organizations_url\": \"https://api.github.com/users/martynovvladislav/orgs\",\n" +
+            "      \"repos_url\": \"https://api.github.com/users/martynovvladislav/repos\",\n" +
+            "      \"events_url\": \"https://api.github.com/users/martynovvladislav/events{/privacy}\",\n" +
+            "      \"received_events_url\": \"https://api.github.com/users/martynovvladislav/received_events\",\n" +
+            "      \"type\": \"User\",\n" +
+            "      \"site_admin\": false\n" +
+            "    },\n" +
+            "    \"parents\": [\n" +
+            "\n" +
+            "    ]\n" +
+            "  }\n" +
+            "]";
 
         stubFor(get(urlEqualTo("/repos/martynovvladislav/tinkoff-java-backend-course-2024/commits"))
             .willReturn(
@@ -77,11 +134,11 @@ public class GitHubClientTest {
         );
 
         GitHubReposClient gitHubReposClient = GitHubReposClient.builder()
-            .webClient(WebClient.builder().baseUrl("https://api.github.com").build())
+            .webClient(WebClient.builder().baseUrl("http://localhost:8080").build())
             .build();
         CommitResponseDto commitResponseDto = gitHubReposClient.fetchCommit("martynovvladislav", "tinkoff-java-backend-course-2024").get();
 
-        Assertions.assertEquals(commitResponseDto.sha(), "e310dfb3d21f1a3f07b5fa8267e9f7c2e3f30b15");
-        Assertions.assertEquals(commitResponseDto.commit().message(), "Merge pull request #2 from martynovvladislav/hw2\n\nhw2 PR");
+        Assertions.assertEquals(commitResponseDto.sha(), "7e848e08c30bce03dcc210368cfbd0eb9553311f");
+        Assertions.assertEquals(commitResponseDto.commit().message(), "labs");
     }
 }

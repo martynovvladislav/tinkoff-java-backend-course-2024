@@ -1,10 +1,5 @@
 package edu.java.scrapper.integrationTests.jooq;
 
-import edu.java.scrapper.domain.jdbc.dtos.ChatLinkDto;
-import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
-import edu.java.scrapper.domain.jdbc.repositories.JdbcChatLinkRepository;
-import edu.java.scrapper.domain.jdbc.repositories.JdbcChatRepository;
-import edu.java.scrapper.domain.jdbc.repositories.JdbcLinkRepository;
 import edu.java.scrapper.domain.jooq.repositories.JooqChatLinkRepository;
 import edu.java.scrapper.domain.jooq.repositories.JooqChatRepository;
 import edu.java.scrapper.domain.jooq.repositories.JooqLinkRepository;

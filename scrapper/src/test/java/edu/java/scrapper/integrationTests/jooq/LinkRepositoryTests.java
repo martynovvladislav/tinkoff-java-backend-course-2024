@@ -1,7 +1,5 @@
 package edu.java.scrapper.integrationTests.jooq;
 
-import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
-import edu.java.scrapper.domain.jdbc.repositories.JdbcLinkRepository;
 import edu.java.scrapper.domain.jooq.repositories.JooqLinkRepository;
 import edu.java.scrapper.domain.jooq.tables.pojos.Link;
 import edu.java.scrapper.integrationTests.IntegrationTest;
