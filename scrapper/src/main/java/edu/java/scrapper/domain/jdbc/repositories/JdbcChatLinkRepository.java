@@ -34,6 +34,14 @@ public class JdbcChatLinkRepository {
             .list();
     }
 
+    public List<ChatLinkDto> findAllByLinkId(Long linkId) {
+        String sql = "SELECT * FROM chat_link WHERE link_id = ?";
+        return jdbcClient.sql(sql)
+            .params(linkId)
+            .query(ChatLinkDto.class)
+            .list();
+    }
+
     public void delete(Long tgChatId, Long linkId) {
         String sql = "DELETE FROM chat_link WHERE chat_id = ? AND link_id = ?";
         jdbcClient.sql(sql)
