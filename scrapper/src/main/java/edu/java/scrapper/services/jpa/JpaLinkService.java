@@ -1,6 +1,6 @@
 package edu.java.scrapper.services.jpa;
 
-import edu.java.scrapper.domain.jdbc.dtos.LinkDto;
+import edu.java.scrapper.domain.dtos.LinkDto;
 import edu.java.scrapper.domain.jpa.dtos.Chat;
 import edu.java.scrapper.domain.jpa.dtos.Link;
 import edu.java.scrapper.domain.jpa.repositories.JpaChatRepository;
