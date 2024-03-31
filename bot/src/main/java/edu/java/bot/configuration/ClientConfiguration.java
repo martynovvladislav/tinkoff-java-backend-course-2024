@@ -1,7 +1,7 @@
 package edu.java.bot.configuration;
 
 import edu.java.bot.clients.ScrapperClientImpl;
-import edu.java.bot.clients.customRetryBackoffSpecs.LinearRetryBackoffSpec;
+import edu.java.bot.utils.LinearRetryBackoffSpec;
 import java.time.Duration;
 import java.util.List;
 import java.util.function.Predicate;

@@ -4,10 +4,15 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import edu.java.scrapper.clients.github.GitHubReposClient;
 import edu.java.scrapper.dtos.github.CommitResponseDto;
 import edu.java.scrapper.dtos.github.ReposResponseDto;
+import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.util.Optional;
+import edu.java.scrapper.utils.LinearRetryBackoffSpec;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.retry.ExhaustedRetryException;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.util.retry.Retry;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -140,5 +145,29 @@ public class GitHubClientTest {
 
         Assertions.assertEquals(commitResponseDto.sha(), "7e848e08c30bce03dcc210368cfbd0eb9553311f");
         Assertions.assertEquals(commitResponseDto.commit().message(), "labs");
+    }
+
+    @Test
+    void linearRetryWithFilterTest() {
+        stubFor(get(urlEqualTo("/repos/martynovvladislav/tinkoff-java-backend-course-2024/commits"))
+            .willReturn(
+                aResponse()
+                    .withHeader("Content-Type", "application/json")
+                    .withBody("")
+                    .withStatus(404)
+            )
+        );
+
+        GitHubReposClient gitHubReposClient = GitHubReposClient.builder()
+            .webClient(WebClient.builder().baseUrl("http://localhost:8080").build())
+            .retryInstance(LinearRetryBackoffSpec.linearBackoff(3, Duration.ofMillis(1)).filter(
+                e -> ((WebClientResponseException) e).getStatusCode().value() == 404
+            ))
+            .build();
+
+        Assertions.assertEquals(
+            gitHubReposClient.fetchCommit("martynovvladislav", "tinkoff-java-backend-course-2024"),
+            Optional.empty()
+        );
     }
 }

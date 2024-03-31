@@ -1,4 +1,4 @@
-package edu.java.scrapper.utils;
+package edu.java.bot.utils;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;

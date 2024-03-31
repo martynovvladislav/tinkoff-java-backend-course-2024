@@ -11,9 +11,11 @@ import edu.java.scrapper.services.LinkService;
 import edu.java.scrapper.utils.BucketGrabber;
 import edu.java.scrapper.utils.LinkResolver;
 import io.github.bucket4j.Bucket;
+import jakarta.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,12 +33,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class LinkController {
     private final LinkService linkService;
     private final BucketGrabber bucketGrabber;
+    public static final String X_FORWARDED_FOR = "X-Forwarded-For";
 
     @GetMapping("/links")
     public ResponseEntity<ListLinkResponseDto> getLinks(
-        @RequestHeader("Tg-Chat-Id") Long tgChatId
+        @RequestHeader("Tg-Chat-Id") Long tgChatId,
+        HttpServletRequest request
     ) {
-        Bucket bucket = bucketGrabber.grabBucket(tgChatId);
+        String clientIP = Optional.ofNullable(request.getHeader(X_FORWARDED_FOR))
+            .orElseGet(request::getRemoteAddr);
+        Bucket bucket = bucketGrabber.grabBucket(String.valueOf(clientIP));
         if (bucket.tryConsume(1)) {
             List<LinkDto> linkDtoList = linkService.listAll(tgChatId);
             ListLinkResponseDto listLinkResponseDto = new ListLinkResponseDto();
@@ -65,9 +71,12 @@ public class LinkController {
     @PostMapping("/links")
     public ResponseEntity<LinkResponseDto> addLink(
         @RequestHeader("Tg-Chat-Id") Long tgChatId,
+        HttpServletRequest request,
         @RequestBody AddLinkRequestDto addLinkRequestDto
     ) {
-        Bucket bucket = bucketGrabber.grabBucket(tgChatId);
+        String clientIP = Optional.ofNullable(request.getHeader(X_FORWARDED_FOR))
+            .orElseGet(request::getRemoteAddr);
+        Bucket bucket = bucketGrabber.grabBucket(String.valueOf(clientIP));
         if (bucket.tryConsume(1)) {
             //TODO date logic
             if (!LinkResolver.isSuitableLink(addLinkRequestDto.getLink())) {
@@ -90,9 +99,12 @@ public class LinkController {
     @DeleteMapping("/links")
     public ResponseEntity<LinkResponseDto> deleteLink(
         @RequestHeader("Tg-Chat-Id") Long tgChatId,
+        HttpServletRequest request,
         @RequestBody RemoveLinkRequestDto removeLinkRequestDto
     ) {
-        Bucket bucket = bucketGrabber.grabBucket(tgChatId);
+        String clientIP = Optional.ofNullable(request.getHeader(X_FORWARDED_FOR))
+            .orElseGet(request::getRemoteAddr);
+        Bucket bucket = bucketGrabber.grabBucket(String.valueOf(clientIP));
         if (bucket.tryConsume(1)) {
             linkService.remove(tgChatId, removeLinkRequestDto.getLink());
             LinkResponseDto linkResponseDto = new LinkResponseDto(

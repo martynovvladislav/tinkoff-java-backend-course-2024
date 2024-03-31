@@ -25,3 +25,12 @@ web-clients:
     retry-policy: ${SCRAPPER_RETRY_POLICY:constant} #values: linear, exponential, constant
     retry-codes:
       - 404
+
+bucket:
+  refill-size: 5
+  refill-interval: 1 #minutes
+  capacity: 5
+
+bucket-cache:
+  max-size: 100
+  expiration-time: 10 #minutes

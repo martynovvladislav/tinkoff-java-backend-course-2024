@@ -1,4 +1,4 @@
-package edu.java.bot.clients.customRetryBackoffSpecs;
+package edu.java.bot.utils;
 
 import java.time.Duration;
 import java.util.Objects;
