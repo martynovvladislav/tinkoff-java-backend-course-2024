@@ -3,6 +3,7 @@ app:
     enable: true
     interval: 10s
     force-check-delay: 10s
+    seconds-threshold: 60
 
 springdoc:
   swagger-ui:
@@ -11,6 +12,13 @@ springdoc:
 spring:
   application:
     name: scrapper
+  datasource:
+    url: jdbc:postgresql://localhost:6543/scrapper
+    username: ${DB_USERNAME:postgres}
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  liquibase:
+    enabled: false
 
 server:
   port: 8080
@@ -19,9 +27,9 @@ logging:
   config: classpath:log4j2-plain.xml
 
 web-clients:
-  github-client-config:
+  github-client-properties:
     base-url: ${GITHUB_BASE_URL:https://api.github.com}
-  so-client-config:
+  so-client-properties:
     base-url: ${SO_BASE_URL:https://api.stackexchange.com}
-  bot-client-config:
+  bot-client-properties:
     base-url: ${BOT_BASE_URL:http://localhost:8090}
