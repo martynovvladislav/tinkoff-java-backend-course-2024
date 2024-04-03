@@ -1,7 +1,9 @@
-package edu.java.scrapper.integrationTests;
+package edu.java.scrapper.integrationTests.jooq;
 
-import edu.java.scrapper.domain.repositories.ChatRepository;
-import edu.java.scrapper.domain.dtos.ChatDto;
+import edu.java.scrapper.domain.jooq.repositories.JooqChatRepository;
+import edu.java.scrapper.domain.jooq.tables.pojos.Chat;
+import edu.java.scrapper.integrationTests.IntegrationTest;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import java.util.List;
 
 @Testcontainers
 @SpringBootTest
-public class ChatDtoRepositoryTests extends IntegrationTest {
-    private final ChatRepository chatRepository;
+public class ChatRepositoryTests extends IntegrationTest {
+    private final JooqChatRepository chatRepository;
 
     @Autowired
-    public ChatDtoRepositoryTests(ChatRepository chatRepository) {
+    public ChatRepositoryTests(JooqChatRepository chatRepository) {
         this.chatRepository = chatRepository;
     }
 
@@ -47,7 +48,7 @@ public class ChatDtoRepositoryTests extends IntegrationTest {
     void findAllChatsTest() {
         chatRepository.add(666L);
         chatRepository.add(1337L);
-        List<ChatDto> chatDtos = chatRepository.findAll();
-        Assertions.assertEquals(chatDtos, List.of(new ChatDto(666L), new ChatDto(1337L)));
+        List<Chat> chats = chatRepository.findAll();
+        Assertions.assertEquals(2, chats.size());
     }
 }

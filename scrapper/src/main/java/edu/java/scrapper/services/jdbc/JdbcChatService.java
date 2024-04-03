@@ -2,23 +2,22 @@ package edu.java.scrapper.services.jdbc;
 
 import edu.java.scrapper.domain.dtos.ChatLinkDto;
 import edu.java.scrapper.domain.dtos.LinkDto;
-import edu.java.scrapper.domain.repositories.ChatLinkRepository;
-import edu.java.scrapper.domain.repositories.ChatRepository;
-import edu.java.scrapper.domain.repositories.LinkRepository;
+import edu.java.scrapper.domain.jdbc.repositories.JdbcChatLinkRepository;
+import edu.java.scrapper.domain.jdbc.repositories.JdbcChatRepository;
+import edu.java.scrapper.domain.jdbc.repositories.JdbcLinkRepository;
 import edu.java.scrapper.exceptions.ChatAlreadyExistException;
 import edu.java.scrapper.exceptions.ChatDoesNotExistException;
 import edu.java.scrapper.services.ChatService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+
 @RequiredArgsConstructor
 public class JdbcChatService implements ChatService {
-    private final ChatRepository chatRepository;
-    private final ChatLinkRepository chatLinkRepository;
-    private final LinkRepository linkRepository;
+    private final JdbcChatRepository chatRepository;
+    private final JdbcChatLinkRepository chatLinkRepository;
+    private final JdbcLinkRepository linkRepository;
 
     @Override
     @Transactional

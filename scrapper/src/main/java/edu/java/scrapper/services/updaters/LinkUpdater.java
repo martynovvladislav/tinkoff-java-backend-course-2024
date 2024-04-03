@@ -5,7 +5,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public interface LinkUpdater {
-    boolean update(LinkDto linkDto) throws URISyntaxException;
+    String update(LinkDto linkDto) throws URISyntaxException;
 
     boolean supports(URI url);
 }

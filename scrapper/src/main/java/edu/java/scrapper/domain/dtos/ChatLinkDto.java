@@ -7,5 +7,5 @@ import lombok.Data;
 @Data
 public class ChatLinkDto {
     Long chatId;
-    Integer linkId;
+    Long linkId;
 }

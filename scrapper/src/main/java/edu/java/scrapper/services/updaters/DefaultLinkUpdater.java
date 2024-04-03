@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DefaultLinkUpdater implements LinkUpdater {
     @Override
-    public boolean update(LinkDto linkDto) throws URISyntaxException {
-        return false;
+    public String update(LinkDto linkDto) throws URISyntaxException {
+        return null;
     }
 
     //TODO default updater

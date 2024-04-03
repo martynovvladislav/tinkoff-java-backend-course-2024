@@ -1,4 +1,4 @@
-package edu.java.scrapper.domain.repositories;
+package edu.java.scrapper.domain.jdbc.repositories;
 
 import edu.java.scrapper.domain.dtos.ChatDto;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ChatRepository {
+public class JdbcChatRepository {
     private final JdbcClient jdbcClient;
 
     public Optional<ChatDto> find(Long tgChatId) {

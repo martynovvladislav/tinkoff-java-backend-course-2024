@@ -11,12 +11,14 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @EnableScheduling
+@ConditionalOnProperty(prefix = "app.scheduler", name = "enable", havingValue = "true")
 @Component
 @RequiredArgsConstructor
 public class LinkUpdateScheduler {
@@ -37,12 +39,13 @@ public class LinkUpdateScheduler {
                 .filter(linkUpdater1 -> linkUpdater1.supports(url))
                 .findFirst()
                 .get();
-            if (linkUpdater.update(linkDto)) {
+            String message = linkUpdater.update(linkDto);
+            if (message != null) {
                 List<Long> chatIds = linkService.listAllByLinkId(linkDto.getId());
                 botClient.sendMessage(
                     new LinkUpdateDto(
                         url,
-                        url + " was updated!",
+                        message,
                         chatIds
                     )
                 );

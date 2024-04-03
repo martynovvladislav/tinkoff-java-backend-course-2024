@@ -7,8 +7,10 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class LinkDto {
-    Integer id;
+    Long id;
     String url;
     OffsetDateTime updatedAt;
     OffsetDateTime lastCheckedAt;
+    String lastCommitSha;
+    Long answersCount;
 }

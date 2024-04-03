@@ -8,7 +8,6 @@ import edu.java.scrapper.dtos.RemoveLinkRequestDto;
 import edu.java.scrapper.services.LinkService;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.OffsetDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +57,7 @@ public class LinkController {
         @RequestBody AddLinkRequestDto addLinkRequestDto
     ) {
         //TODO date logic
-        linkService.add(tgChatId, addLinkRequestDto.getLink(), OffsetDateTime.now());
+        linkService.add(tgChatId, addLinkRequestDto.getLink());
         LinkResponseDto linkResponseDto = new LinkResponseDto(
             tgChatId,
             addLinkRequestDto.getLink()

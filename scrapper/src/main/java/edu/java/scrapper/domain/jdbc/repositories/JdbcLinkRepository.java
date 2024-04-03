@@ -1,4 +1,4 @@
-package edu.java.scrapper.domain.repositories;
+package edu.java.scrapper.domain.jdbc.repositories;
 
 import edu.java.scrapper.domain.dtos.LinkDto;
 import java.time.OffsetDateTime;
@@ -10,52 +10,54 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class LinkRepository {
+public class JdbcLinkRepository {
     private final JdbcClient jdbcClient;
 
     public Optional<LinkDto> findByUrl(String url) {
-        String sql = "SELECT id,url,updated_at,last_checked_at FROM link WHERE url = ?";
+        String sql = "SELECT id,url,updated_at,last_checked_at,last_commit_sha,answers_count FROM link WHERE url = ?";
         return jdbcClient.sql(sql)
             .params(url)
             .query(LinkDto.class)
             .optional();
     }
 
-    public Optional<LinkDto> findById(Integer id) {
-        String sql = "SELECT id,url,updated_at,last_checked_at FROM link WHERE id = ?";
+    public Optional<LinkDto> findById(Long id) {
+        String sql = "SELECT id,url,updated_at,last_checked_at,last_commit_sha,answers_count FROM link WHERE id = ?";
         return jdbcClient.sql(sql)
             .params(id)
             .query(LinkDto.class)
             .optional();
     }
 
-    public Integer getLinkId(String url) {
+    public Long getLinkId(String url) {
         String sql = "SELECT id FROM link WHERE url = ?";
         return jdbcClient.sql(sql)
             .param(url)
+            .query(Long.class)
+            .single();
+    }
+
+    public void add(LinkDto linkDto) {
+        String sql =
+            "INSERT INTO link(url,updated_at,last_checked_at,last_commit_sha,answers_count)"
+                + " VALUES(?, ?, ?, ?, ?) RETURNING id";
+        jdbcClient.sql(sql)
+            .params(
+                linkDto.getUrl(),
+                linkDto.getUpdatedAt(),
+                linkDto.getLastCheckedAt(),
+                linkDto.getLastCommitSha(),
+                linkDto.getAnswersCount()
+            )
             .query(Integer.class)
             .single();
     }
 
-    public Integer add(LinkDto linkDto) {
-        if (findByUrl(linkDto.getUrl()).isEmpty()) {
-            String sql = "INSERT INTO link(url,updated_at,last_checked_at) VALUES(?, ?, ?) RETURNING id";
-            return jdbcClient.sql(sql)
-                .params(linkDto.getUrl(), linkDto.getUpdatedAt(), linkDto.getLastCheckedAt())
-                .query(Integer.class)
-                .single();
-        }
-        return getLinkId(linkDto.getUrl());
-    }
-
     public void delete(String url) {
-        if (findByUrl(url).isPresent()) {
             String sql = "DELETE FROM link WHERE url = ?";
             jdbcClient.sql(sql)
                 .params(url)
                 .update();
-        }
-
     }
 
     public List<LinkDto> findAll() {
@@ -75,9 +77,16 @@ public class LinkRepository {
     }
 
     public void update(LinkDto linkDto) {
-        String sql = "UPDATE link SET updated_at = ?, last_checked_at = ? WHERE id = ?";
+        String sql =
+            "UPDATE link SET updated_at = ?, last_checked_at = ?, last_commit_sha = ?, answers_count = ? WHERE id = ?";
         jdbcClient.sql(sql)
-            .params(linkDto.getUpdatedAt(), linkDto.getLastCheckedAt(), linkDto.getId())
+            .params(
+                linkDto.getUpdatedAt(),
+                linkDto.getLastCheckedAt(),
+                linkDto.getLastCommitSha(),
+                linkDto.getAnswersCount(),
+                linkDto.getId()
+            )
             .update();
     }
 }
