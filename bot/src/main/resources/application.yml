@@ -1,5 +1,6 @@
 app:
   telegram-token: ${BOT_API_KEY}
+  kafka-topic-name: updates_main
 
 springdoc:
   swagger-ui:
@@ -34,3 +35,20 @@ bucket:
 bucket-cache:
   max-size: 100
   expiration-time: 10 #minutes
+
+kafka:
+  consumer:
+    bootstrap-servers: localhost:9092
+    group-id: bot
+    auto-offset-reset: earliest
+    max-poll-interval-ms: 300_000
+    enable-auto-commit: false
+    concurrency: 1
+  producer:
+    bootstrap-servers: http://localhost:9092
+    client-id: bot
+    acks-mode: 0
+    delivery-timeout: 60s
+    linger-ms: 1_000
+    batch-size: 100_000
+

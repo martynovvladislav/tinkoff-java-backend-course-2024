@@ -5,6 +5,8 @@ app:
     force-check-delay: 10s
     seconds-threshold: 30 #seconds
   database-access-type: jpa
+  use-queue: true
+  kafka-topic-name: updates_main
 
 springdoc:
   swagger-ui:
@@ -60,4 +62,13 @@ bucket:
 bucket-cache:
   max-size: 100
   expiration-time: 10 #minutes
+
+kafka:
+  producer:
+    bootstrap-servers: http://localhost:9092
+    client-id: bot
+    acks-mode: 0
+    delivery-timeout: 60s
+    linger-ms: 1_000
+    batch-size: 100_000
 
