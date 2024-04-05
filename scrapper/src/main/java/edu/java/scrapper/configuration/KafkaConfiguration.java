@@ -3,6 +3,7 @@ package edu.java.scrapper.configuration;
 import edu.java.scrapper.dtos.LinkUpdateDto;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,17 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 
 @Configuration
 public class KafkaConfiguration {
+
+    @Bean
+    public NewTopic updatesMain() {
+        return new NewTopic("updates_main", 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic updatesDlq() {
+        return new NewTopic("updates_dlq", 1, (short) 1);
+    }
+
     @Bean
     public ProducerFactory<String, LinkUpdateDto> producerFactory(KafkaProducerProperties kafkaProducerProperties) {
         Map<String, Object> props = new HashMap<>();

@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
-@SpringBootTest
+@SpringBootTest("spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration")
 public class JdbcChatServiceTest extends IntegrationTest {
     private final JdbcChatService chatService;
     private final JdbcChatRepository chatRepository;

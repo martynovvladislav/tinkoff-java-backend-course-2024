@@ -27,7 +27,7 @@ import java.time.temporal.ChronoField;
 import java.util.List;
 
 @Testcontainers
-@SpringBootTest
+@SpringBootTest("spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration")
 public class JooqLinkServiceTest extends IntegrationTest {
     private final JooqChatService chatService;
     private final JooqLinkService linkService;

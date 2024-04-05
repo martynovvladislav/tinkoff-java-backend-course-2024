@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
-@SpringBootTest
+@SpringBootTest("spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration")
 public class JooqChatServiceTest extends IntegrationTest {
     private final JooqChatService chatService;
     private final JooqChatRepository chatRepository;
