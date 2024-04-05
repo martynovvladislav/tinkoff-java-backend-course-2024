@@ -65,7 +65,7 @@ bucket-cache:
 
 kafka:
   producer:
-    bootstrap-servers: http://localhost:9092
+    bootstrap-servers: localhost:9092
     client-id: bot
     acks-mode: 0
     delivery-timeout: 60s
