@@ -5,7 +5,7 @@ app:
     force-check-delay: 10s
     seconds-threshold: 30 #seconds
   database-access-type: jpa
-  use-queue: true
+  use-queue: false
   kafka-topic-name: updates_main
 
 springdoc:
@@ -71,4 +71,27 @@ kafka:
     delivery-timeout: 60s
     linger-ms: 1_000
     batch-size: 100_000
+
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "*"
+      path-mapping:
+        prometheus: metrics
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    prometheus:
+      enabled: true
+    info:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
 
