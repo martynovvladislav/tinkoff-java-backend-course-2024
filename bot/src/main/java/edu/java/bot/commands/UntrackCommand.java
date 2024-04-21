@@ -36,27 +36,37 @@ public class UntrackCommand implements Command {
         }
 
         String url = update.message().text().split(" ")[1];
+        SendMessage sendMessage = new SendMessage(
+            update.message().chat().id(),
+            "Link has been removed!"
+        );
         try {
             scrapperClient.deleteLink(
                 update.message().chat().id(),
                 new RemoveLinkRequestDto(new URI(url))
             );
         } catch (URISyntaxException e) {
-            return new SendMessage(
+            sendMessage = new SendMessage(
                 update.message().chat().id(),
                 "Bad link! Try again"
             );
         } catch (WebClientResponseException e) {
-            return new SendMessage(
+            String msg = e.getLocalizedMessage();
+            if (!(e.getResponseBodyAs(ApiErrorResponseDto.class) == null)) {
+                msg = e.getResponseBodyAs(ApiErrorResponseDto.class).getDescription();
+            }
+            sendMessage = new SendMessage(
                 update.message().chat().id(),
-                e.getResponseBodyAs(ApiErrorResponseDto.class).getDescription()
+                msg
+            );
+        } catch (Exception e) {
+            sendMessage = new SendMessage(
+                update.message().chat().id(),
+                e.getLocalizedMessage()
             );
         }
 
-        return new SendMessage(
-            update.message().chat().id(),
-            "Link has been removed!"
-        );
+        return sendMessage;
     }
 
     @Override

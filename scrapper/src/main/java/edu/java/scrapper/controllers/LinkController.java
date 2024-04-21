@@ -5,7 +5,9 @@ import edu.java.scrapper.dtos.AddLinkRequestDto;
 import edu.java.scrapper.dtos.LinkResponseDto;
 import edu.java.scrapper.dtos.ListLinkResponseDto;
 import edu.java.scrapper.dtos.RemoveLinkRequestDto;
+import edu.java.scrapper.exceptions.BadLinkException;
 import edu.java.scrapper.services.LinkService;
+import edu.java.scrapper.utils.LinkResolver;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -57,6 +59,9 @@ public class LinkController {
         @RequestBody AddLinkRequestDto addLinkRequestDto
     ) {
         //TODO date logic
+        if (!LinkResolver.isSuitableLink(addLinkRequestDto.getLink())) {
+            throw new BadLinkException();
+        }
         linkService.add(tgChatId, addLinkRequestDto.getLink());
         LinkResponseDto linkResponseDto = new LinkResponseDto(
             tgChatId,

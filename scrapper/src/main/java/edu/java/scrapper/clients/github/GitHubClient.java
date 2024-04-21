@@ -5,7 +5,7 @@ import edu.java.scrapper.dtos.github.ReposResponseDto;
 import java.util.Optional;
 
 public interface GitHubClient {
-    ReposResponseDto fetchUser(String owner, String repos);
+    Optional<ReposResponseDto> fetchUser(String owner, String repos);
 
     Optional<CommitResponseDto> fetchCommit(String owner, String repos);
 }

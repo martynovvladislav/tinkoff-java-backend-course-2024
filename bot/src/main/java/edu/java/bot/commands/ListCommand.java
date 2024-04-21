@@ -45,9 +45,18 @@ public class ListCommand implements Command {
                     .collect(Collectors.joining("\n\n"))
             );
         } catch (WebClientResponseException e) {
+            String msg = e.getLocalizedMessage();
+            if (!(e.getResponseBodyAs(ApiErrorResponseDto.class) == null)) {
+                msg = e.getResponseBodyAs(ApiErrorResponseDto.class).getDescription();
+            }
             return new SendMessage(
                 update.message().chat().id(),
-                e.getResponseBodyAs(ApiErrorResponseDto.class).getDescription()
+                msg
+            );
+        } catch (Exception e) {
+            return new SendMessage(
+                update.message().chat().id(),
+                e.getLocalizedMessage()
             );
         }
 
