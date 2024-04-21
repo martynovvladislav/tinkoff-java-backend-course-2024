@@ -1,4 +1,4 @@
-package edu.java.scrapper.integrationTests.jooq;
+package edu.java.scrapper.integrationTests.repositories.jooq;
 
 import edu.java.scrapper.domain.jooq.repositories.JooqChatRepository;
 import edu.java.scrapper.domain.jooq.tables.pojos.Chat;

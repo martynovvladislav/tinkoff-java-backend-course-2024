@@ -1,6 +1,7 @@
-package edu.java.bot.commands;
+package edu.java.bot.commandsTests;
 
 import com.pengrad.telegrambot.request.SendMessage;
+import edu.java.bot.commands.HelpCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,23 +10,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class TestsMockitoForTrackCommand extends TestsMockitoInitializer {
+public class TestsMockitoForHelpCommand extends TestsMockitoInitializer {
     @Autowired
-    public TrackCommand trackCommand;
+    public HelpCommand helpCommand;
 
     @Test
-    @DisplayName("track command handle test")
+    @DisplayName("help command handle test")
     void handleTest() {
         Mockito.when(update.message()).thenReturn(message);
-        Mockito.when(message.text()).thenReturn("/track");
+        Mockito.when(message.text()).thenReturn("/help");
         Mockito.when(message.chat()).thenReturn(chat);
         Mockito.when(chat.id()).thenReturn(11L);
 
-        SendMessage sendMessage = trackCommand.handle(update);
+        SendMessage sendMessage = helpCommand.handle(update);
 
         Assertions.assertEquals(
             sendMessage.getParameters().get("text"),
-            "Currently in development"
+            "Available commands:\n" +
+                "/list - Showing the list of tracked links\n" +
+                "/track - Starting tracking a link\n" +
+                "/untrack - Stopping tracking a link\n"
         );
         Assertions.assertEquals(
             sendMessage.getParameters().get("chat_id"),

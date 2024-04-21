@@ -8,6 +8,8 @@ import edu.java.scrapper.services.LinkService;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -31,14 +33,18 @@ public class StackOverflowLinkUpdater implements LinkUpdater {
                 linkDto.setUpdatedAt(questionResponse.lastActivityDate());
                 linkDto.setAnswersCount((long) answerResponses.size());
                 linkService.update(linkDto);
-                return questionResponse.title() + " WAS UPDATED: new answers (added on "
-                    + answerResponses.get(0).getCreationDate() + ")";
+                return questionResponse.title() + "\n--\nWAS UPDATED:\n--\nnew answers (added on "
+                    + answerResponses.get(0).getCreationDate()
+                    .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)) + ")\n--";
             }
         }
-        if (!linkDto.getUpdatedAt().equals(questionResponse.lastActivityDate())) {
+        if (!linkDto.getUpdatedAt().toZonedDateTime().withNano(0)
+            .equals(questionResponse.lastActivityDate().toZonedDateTime()
+                .withZoneSameInstant(linkDto.getUpdatedAt().toZonedDateTime().getZone()).withNano(0))
+        ) {
             linkDto.setUpdatedAt(questionResponse.lastActivityDate());
             linkService.update(linkDto);
-            return questionResponse.title() + " WAS UPDATED";
+            return questionResponse.title() + "\n--\nWAS UPDATED\n--";
         }
         linkService.update(linkDto);
         return null;

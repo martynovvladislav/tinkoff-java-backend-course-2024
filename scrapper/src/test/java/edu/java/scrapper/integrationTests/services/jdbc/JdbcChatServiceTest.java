@@ -1,8 +1,12 @@
-package edu.java.scrapper.integrationTests.services;
+package edu.java.scrapper.integrationTests.services.jdbc;
 
+import edu.java.scrapper.domain.jdbc.repositories.JdbcChatLinkRepository;
 import edu.java.scrapper.domain.jdbc.repositories.JdbcChatRepository;
+import edu.java.scrapper.domain.jdbc.repositories.JdbcLinkRepository;
+import edu.java.scrapper.domain.jpa.repositories.JpaChatRepository;
 import edu.java.scrapper.integrationTests.IntegrationTest;
 import edu.java.scrapper.services.ChatService;
+import edu.java.scrapper.services.jdbc.JdbcChatService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +17,21 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 @SpringBootTest
-public class ChatServiceTest extends IntegrationTest {
-    private final ChatService chatService;
+public class JdbcChatServiceTest extends IntegrationTest {
+    private final JdbcChatService chatService;
     private final JdbcChatRepository chatRepository;
+    private final JdbcChatLinkRepository chatLinkRepository;
+    private final JdbcLinkRepository linkRepository;
 
     @Autowired
-    public ChatServiceTest(ChatService chatService, JdbcChatRepository chatRepository) {
-        this.chatService = chatService;
+    public JdbcChatServiceTest(
+        JdbcChatRepository chatRepository,
+        JdbcLinkRepository linkRepository,
+        JdbcChatLinkRepository chatLinkRepository) {
         this.chatRepository = chatRepository;
+        this.linkRepository = linkRepository;
+        this.chatLinkRepository = chatLinkRepository;
+        this.chatService = new JdbcChatService(chatRepository, chatLinkRepository, linkRepository);
     }
 
     @Test

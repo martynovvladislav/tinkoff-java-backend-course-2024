@@ -1,4 +1,4 @@
-package edu.java.scrapper.integrationTests.jdbc;
+package edu.java.scrapper.integrationTests.repositories.jdbc;
 
 import edu.java.scrapper.domain.dtos.ChatDto;
 import edu.java.scrapper.domain.jdbc.repositories.JdbcChatRepository;

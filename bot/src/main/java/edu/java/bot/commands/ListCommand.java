@@ -2,10 +2,18 @@ package edu.java.bot.commands;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import edu.java.bot.clients.ScrapperClientImpl;
+import edu.java.bot.dtos.ApiErrorResponseDto;
+import edu.java.bot.dtos.ListLinkResponseDto;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @Component
+@RequiredArgsConstructor
 public class ListCommand implements Command {
+    private final ScrapperClientImpl scrapperClient;
 
     @Override
     public String command() {
@@ -19,10 +27,30 @@ public class ListCommand implements Command {
 
     @Override
     public SendMessage handle(Update update) {
-        return new SendMessage(
-            update.message().chat().id(),
-            "No links are being tracked currently"
-        );
+        try {
+            ListLinkResponseDto listLinkResponseDto = scrapperClient.getLinks(
+                update.message().chat().id()
+            );
+            if (listLinkResponseDto.getLinks().isEmpty()) {
+                return new SendMessage(
+                    update.message().chat().id(),
+                    "No links are being tracked currently"
+                );
+            }
+            return new SendMessage(
+                update.message().chat().id(),
+                "Tracking links:\n"
+                + listLinkResponseDto.getLinks().stream()
+                    .map(linkResponseDto -> linkResponseDto.getUrl().toString())
+                    .collect(Collectors.joining("\n\n"))
+            );
+        } catch (WebClientResponseException e) {
+            return new SendMessage(
+                update.message().chat().id(),
+                e.getResponseBodyAs(ApiErrorResponseDto.class).getDescription()
+            );
+        }
+
     }
 
     @Override

@@ -1,6 +1,7 @@
-package edu.java.bot.commands;
+package edu.java.bot.commandsTests;
 
 import com.pengrad.telegrambot.request.SendMessage;
+import edu.java.bot.commands.UntrackCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,23 +10,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class TestsMockitoForListCommand extends TestsMockitoInitializer {
+public class TestsMockitoForUntrackCommand extends TestsMockitoInitializer {
     @Autowired
-    public ListCommand listCommand;
+    public UntrackCommand untrackCommand;
 
     @Test
-    @DisplayName("list command handle test")
+    @DisplayName("track command handle test")
     void handleTest() {
         Mockito.when(update.message()).thenReturn(message);
-        Mockito.when(message.text()).thenReturn("/list");
+        Mockito.when(message.text()).thenReturn("/untrack");
         Mockito.when(message.chat()).thenReturn(chat);
         Mockito.when(chat.id()).thenReturn(11L);
 
-        SendMessage sendMessage = listCommand.handle(update);
+        SendMessage sendMessage = untrackCommand.handle(update);
 
         Assertions.assertEquals(
             sendMessage.getParameters().get("text"),
-            "No links are being tracked currently"
+            "Format: '/untrack your_link'"
         );
         Assertions.assertEquals(
             sendMessage.getParameters().get("chat_id"),

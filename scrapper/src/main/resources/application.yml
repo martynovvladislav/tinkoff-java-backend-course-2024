@@ -4,6 +4,7 @@ app:
     interval: 10s
     force-check-delay: 10s
     seconds-threshold: 30
+  database-access-type: jpa
 
 springdoc:
   swagger-ui:

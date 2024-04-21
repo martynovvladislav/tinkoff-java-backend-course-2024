@@ -1,31 +1,34 @@
-package edu.java.bot.commands;
+package edu.java.bot.commandsTests;
 
 import com.pengrad.telegrambot.request.SendMessage;
+import edu.java.bot.commands.ListCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class TestsMockitoForUntrackCommand extends TestsMockitoInitializer {
-    @Autowired
-    public UntrackCommand untrackCommand;
+public class TestsMockitoForListCommand extends TestsMockitoInitializer {
+    public ListCommand listCommand = Mockito.mock(ListCommand.class);
 
     @Test
-    @DisplayName("track command handle test")
+    @DisplayName("list command handle test")
     void handleTest() {
+        Mockito.when(listCommand.handle(update)).thenReturn(new SendMessage(
+            11L,
+            "No links are being tracked currently"
+        ));
         Mockito.when(update.message()).thenReturn(message);
-        Mockito.when(message.text()).thenReturn("/untrack");
+        Mockito.when(message.text()).thenReturn("/list");
         Mockito.when(message.chat()).thenReturn(chat);
         Mockito.when(chat.id()).thenReturn(11L);
 
-        SendMessage sendMessage = untrackCommand.handle(update);
+        SendMessage sendMessage = listCommand.handle(update);
 
         Assertions.assertEquals(
             sendMessage.getParameters().get("text"),
-            "Currently in development"
+            "No links are being tracked currently"
         );
         Assertions.assertEquals(
             sendMessage.getParameters().get("chat_id"),

@@ -1,14 +1,11 @@
-package edu.java.scrapper.clients;
+package edu.java.scrapper.clientsTests;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
-import edu.java.scrapper.configuration.WebClientConfiguration;
 import edu.java.scrapper.dtos.stackoverflow.AnswerResponse;
 import edu.java.scrapper.dtos.stackoverflow.QuestionResponse;
 import edu.java.scrapper.clients.stackoverflow.StackOverflowQuestionsClient;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.web.reactive.function.client.WebClient;
 import java.time.OffsetDateTime;
 import java.util.List;
