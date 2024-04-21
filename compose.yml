@@ -1,5 +1,6 @@
 services:
   postgresql:
+    container_name: postgres1
     image: postgres:16
     ports:
       - "6543:5432"

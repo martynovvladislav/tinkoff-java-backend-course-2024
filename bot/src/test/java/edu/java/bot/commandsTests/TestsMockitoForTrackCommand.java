@@ -9,14 +9,16 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 public class TestsMockitoForTrackCommand extends TestsMockitoInitializer {
-    @Autowired
-    public TrackCommand trackCommand;
+    public TrackCommand trackCommand = Mockito.mock(TrackCommand.class);
 
     @Test
     @DisplayName("track command handle test")
     void handleTest() {
+        Mockito.when(trackCommand.handle(update)).thenReturn(new SendMessage(
+            11L,
+            "Format: '/track your_link'"
+        ));
         Mockito.when(update.message()).thenReturn(message);
         Mockito.when(message.text()).thenReturn("/track");
         Mockito.when(message.chat()).thenReturn(chat);

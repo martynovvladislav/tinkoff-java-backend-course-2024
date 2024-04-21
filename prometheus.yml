@@ -5,8 +5,8 @@ scrape_configs:
   - job_name: 'scrapper'
     metrics_path: '/metrics'
     static_configs:
-      - targets: ['host.docker.internal:8081']
+      - targets: ['scrapper:8081']
   - job_name: 'bot'
     metrics_path: '/metrics'
     static_configs:
-      - targets: [ 'host.docker.internal:8091' ]
+      - targets: [ 'bot:8091' ]

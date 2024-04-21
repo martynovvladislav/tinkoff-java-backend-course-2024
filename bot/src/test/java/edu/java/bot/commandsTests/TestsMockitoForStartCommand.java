@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 public class TestsMockitoForStartCommand extends TestsMockitoInitializer {
     public StartCommand startCommand = Mockito.mock(StartCommand.class);
 

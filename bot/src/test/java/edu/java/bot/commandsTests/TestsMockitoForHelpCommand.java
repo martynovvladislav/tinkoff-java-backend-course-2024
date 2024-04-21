@@ -8,15 +8,21 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootTest
 public class TestsMockitoForHelpCommand extends TestsMockitoInitializer {
-    @Autowired
-    public HelpCommand helpCommand;
+    public HelpCommand helpCommand = Mockito.mock(HelpCommand.class);
 
     @Test
     @DisplayName("help command handle test")
     void handleTest() {
+        Mockito.when(helpCommand.handle(update)).thenReturn(new SendMessage(
+            11L,
+            "Available commands:\n" +
+                "/list - Showing the list of tracked links\n" +
+                "/track - Starting tracking a link\n" +
+                "/untrack - Stopping tracking a link\n"
+        ));
         Mockito.when(update.message()).thenReturn(message);
         Mockito.when(message.text()).thenReturn("/help");
         Mockito.when(message.chat()).thenReturn(chat);

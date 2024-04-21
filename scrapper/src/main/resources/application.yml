@@ -16,7 +16,7 @@ spring:
   application:
     name: scrapper
   datasource:
-    url: jdbc:postgresql://localhost:6543/scrapper
+    url: jdbc:postgresql://postgres1:6543/scrapper
     username: ${DB_USERNAME:postgres}
     password: postgres
     driverClassName: org.postgresql.Driver
@@ -47,7 +47,7 @@ web-clients:
     retry-codes:
       - 404
   bot-client-properties:
-    base-url: ${BOT_BASE_URL:http://localhost:8090}
+    base-url: ${BOT_BASE_URL:http://bot:8090}
     retry-attempts: ${BOT_RETRY_ATTEMPTS:3}
     retry-duration: ${BOT_RETRY_DURATION:2} #seconds
     retry-policy: ${BOT_RETRY_POLICY:constant} #values: linear, exponential, constant
@@ -65,7 +65,7 @@ bucket-cache:
 
 kafka:
   producer:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka1:9092
     client-id: bot
     acks-mode: 0
     delivery-timeout: 60s

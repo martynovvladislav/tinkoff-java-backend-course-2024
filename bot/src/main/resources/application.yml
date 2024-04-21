@@ -38,14 +38,14 @@ bucket-cache:
 
 kafka:
   consumer:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka1:9092
     group-id: bot
     auto-offset-reset: earliest
     max-poll-interval-ms: 300_000
     enable-auto-commit: false
     concurrency: 1
   producer:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka1:9092
     client-id: bot
     acks-mode: 0
     delivery-timeout: 60s
