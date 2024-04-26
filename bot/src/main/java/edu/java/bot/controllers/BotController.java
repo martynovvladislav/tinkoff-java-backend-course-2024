@@ -1,9 +1,8 @@
 package edu.java.bot.controllers;
 
 import edu.java.bot.dtos.LinkUpdateDto;
-import edu.java.bot.suppliers.MessageSupplier;
+import edu.java.bot.services.NotificationService;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class BotController {
-    private final MessageSupplier messageSupplier;
+    private final NotificationService notificationService;
 
     @PostMapping("/updates")
     public ResponseEntity<Void> sendMessage(
@@ -24,16 +23,7 @@ public class BotController {
         @RequestBody
         LinkUpdateDto linkUpdateDto
     ) {
-        String description = linkUpdateDto.getDescription();
-        String url = linkUpdateDto.getUrl().toString();
-        List<Long> tgChatIds = linkUpdateDto.getTgChatIds();
-        for (Long tgChatId : tgChatIds) {
-            messageSupplier.send(
-                tgChatId,
-                description + "\n" + url
-            );
-        }
-        log.info("Update has been sent");
+        notificationService.sendUpdates(linkUpdateDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

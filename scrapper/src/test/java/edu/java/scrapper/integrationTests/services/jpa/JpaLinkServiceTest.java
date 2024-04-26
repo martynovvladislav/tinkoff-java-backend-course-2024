@@ -26,7 +26,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Testcontainers
-@SpringBootTest
+@SpringBootTest("spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration")
 public class JpaLinkServiceTest extends IntegrationTest {
     private final JpaChatService chatService;
     private final JpaLinkService linkService;

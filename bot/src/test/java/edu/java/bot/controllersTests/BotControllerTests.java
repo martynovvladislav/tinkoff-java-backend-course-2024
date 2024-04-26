@@ -1,6 +1,7 @@
 package edu.java.bot.controllersTests;
 
 import edu.java.bot.controllers.BotController;
+import edu.java.bot.services.NotificationService;
 import edu.java.bot.suppliers.MessageSupplier;
 import edu.java.bot.utils.BucketGrabber;
 import io.github.bucket4j.Bandwidth;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.Duration;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
@@ -28,14 +30,14 @@ public class BotControllerTests {
     private MockMvc mockMvc;
 
     @MockBean
-    MessageSupplier messageSupplier;
+    NotificationService notificationService;
 
     @MockBean
     BucketGrabber bucketGrabber;
 
     @BeforeEach
     public void initialize() {
-        doNothing().when(messageSupplier).send(anyLong(), anyString());
+        doNothing().when(notificationService).sendUpdates(any());
         Mockito.when(bucketGrabber.grabBucket(anyString())).thenReturn(
             Bucket.builder()
                 .addLimit(
