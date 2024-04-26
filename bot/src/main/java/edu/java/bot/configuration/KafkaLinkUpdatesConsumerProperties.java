@@ -2,8 +2,8 @@ package edu.java.bot.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "kafka.consumer")
-public record KafkaConsumerProperties(
+@ConfigurationProperties(prefix = "kafka.link-update-topic")
+public record KafkaLinkUpdatesConsumerProperties(
     String bootstrapServers,
     String groupId,
     String autoOffsetReset,
