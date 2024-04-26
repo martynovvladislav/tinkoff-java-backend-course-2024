@@ -6,7 +6,6 @@ app:
     seconds-threshold: 30 #seconds
   database-access-type: jpa
   use-queue: false
-  kafka-topic-name: updates_main
 
 springdoc:
   swagger-ui:
@@ -64,6 +63,7 @@ bucket-cache:
   expiration-time: 10 #minutes
 
 kafka:
+  kafka-topic-name: updates_main
   producer:
     bootstrap-servers: localhost:9092
     client-id: bot

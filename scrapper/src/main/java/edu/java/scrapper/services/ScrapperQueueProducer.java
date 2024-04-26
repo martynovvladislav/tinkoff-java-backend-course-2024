@@ -1,26 +1,29 @@
 package edu.java.scrapper.services;
 
+import edu.java.scrapper.clients.bot.BotClient;
 import edu.java.scrapper.dtos.LinkUpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.stereotype.Service;
 
-@Service
 @RequiredArgsConstructor
 @Slf4j
-public class ScrapperQueueProducer {
+public class ScrapperQueueProducer implements BotClient {
     private final KafkaTemplate<String, LinkUpdateDto> kafkaProducer;
 
-    public void send(LinkUpdateDto linkUpdateDto, String topicName) {
+    @Value("${kafka.kafka-topic-name}")
+    private String kafkaTopicName;
+
+    public void sendMessage(LinkUpdateDto linkUpdateDto) {
         log.info(linkUpdateDto.toString());
-        log.info(topicName);
+        log.info(kafkaTopicName);
         Message<LinkUpdateDto> message = MessageBuilder
             .withPayload(linkUpdateDto)
-            .setHeader(KafkaHeaders.TOPIC, topicName)
+            .setHeader(KafkaHeaders.TOPIC, kafkaTopicName)
             .build();
         kafkaProducer.send(message);
     }
