@@ -34,3 +34,43 @@ bucket:
 bucket-cache:
   max-size: 100
   expiration-time: 10 #minutes
+
+kafka:
+  kafka-topic-name: updates_main
+  link-update-topic:
+    bootstrap-servers: kafka1:9092
+    group-id: bot
+    auto-offset-reset: earliest
+    max-poll-interval-ms: 300_000
+    enable-auto-commit: false
+    concurrency: 1
+  producer:
+    bootstrap-servers: kafka1:9092
+    client-id: bot
+    acks-mode: 0
+    delivery-timeout: 60s
+    linger-ms: 1_000
+    batch-size: 100_000
+
+management:
+  server:
+    port: 8091
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "*"
+      path-mapping:
+        prometheus: metrics
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    prometheus:
+      enabled: true
+    info:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+

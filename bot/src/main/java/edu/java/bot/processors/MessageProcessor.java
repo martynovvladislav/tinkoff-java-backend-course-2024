@@ -4,6 +4,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import edu.java.bot.clients.ScrapperClientImpl;
 import edu.java.bot.commands.Command;
+import io.micrometer.core.instrument.MeterRegistry;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ public class MessageProcessor implements UserMessageProcessor {
 
     private final List<Command> commands;
     private final ScrapperClientImpl scrapperClient;
+    private final MeterRegistry meterRegistry;
 
     @Override
     public List<? extends Command> commands() {
@@ -23,6 +25,7 @@ public class MessageProcessor implements UserMessageProcessor {
 
     @Override
     public SendMessage process(Update update) {
+        meterRegistry.counter("processed_messages_total").increment();
         if (update.message() == null) {
             if (!update.myChatMember().oldChatMember().status()
                 .equals(update.myChatMember().newChatMember().status())) {

@@ -5,6 +5,7 @@ app:
     force-check-delay: 10s
     seconds-threshold: 30 #seconds
   database-access-type: jpa
+  use-queue: false
 
 springdoc:
   swagger-ui:
@@ -14,7 +15,7 @@ spring:
   application:
     name: scrapper
   datasource:
-    url: jdbc:postgresql://localhost:6543/scrapper
+    url: jdbc:postgresql://postgres1:6543/scrapper
     username: ${DB_USERNAME:postgres}
     password: postgres
     driverClassName: org.postgresql.Driver
@@ -45,7 +46,7 @@ web-clients:
     retry-codes:
       - 404
   bot-client-properties:
-    base-url: ${BOT_BASE_URL:http://localhost:8090}
+    base-url: ${BOT_BASE_URL:http://bot:8090}
     retry-attempts: ${BOT_RETRY_ATTEMPTS:3}
     retry-duration: ${BOT_RETRY_DURATION:2} #seconds
     retry-policy: ${BOT_RETRY_POLICY:constant} #values: linear, exponential, constant
@@ -60,4 +61,37 @@ bucket:
 bucket-cache:
   max-size: 100
   expiration-time: 10 #minutes
+
+kafka:
+  kafka-topic-name: updates_main
+  producer:
+    bootstrap-servers: kafka1:9092
+    client-id: bot
+    acks-mode: 0
+    delivery-timeout: 60s
+    linger-ms: 1_000
+    batch-size: 100_000
+
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "*"
+      path-mapping:
+        prometheus: metrics
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    prometheus:
+      enabled: true
+    info:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
 

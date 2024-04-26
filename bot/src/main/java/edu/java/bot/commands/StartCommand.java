@@ -12,7 +12,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 @Component
 @RequiredArgsConstructor
 public class StartCommand implements Command {
-        private final ScrapperClientImpl scrapperClient;
+    private final ScrapperClientImpl scrapperClient;
 
     @Override
     public String command() {
