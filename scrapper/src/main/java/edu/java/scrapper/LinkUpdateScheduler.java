@@ -1,9 +1,9 @@
 package edu.java.scrapper;
 
-import edu.java.scrapper.clients.bot.BotClientImpl;
 import edu.java.scrapper.domain.dtos.LinkDto;
 import edu.java.scrapper.dtos.LinkUpdateDto;
 import edu.java.scrapper.services.LinkService;
+import edu.java.scrapper.services.UpdateSender;
 import edu.java.scrapper.services.updaters.LinkUpdater;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 public class LinkUpdateScheduler {
     private final LinkService linkService;
     private final List<? extends LinkUpdater> linkUpdaters;
-    private final BotClientImpl botClient;
+    private final UpdateSender updateSender;
 
     @Value("#{@scheduler.secondsThreshold()}")
     private long secondsThreshold;
@@ -42,7 +42,7 @@ public class LinkUpdateScheduler {
             String message = linkUpdater.update(linkDto);
             if (message != null) {
                 List<Long> chatIds = linkService.listAllByLinkId(linkDto.getId());
-                botClient.sendMessage(
+                updateSender.send(
                     new LinkUpdateDto(
                         url,
                         message,

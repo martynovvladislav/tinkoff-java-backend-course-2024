@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Testcontainers
-@SpringBootTest
+@SpringBootTest("spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration")
 public class LinkRepositoryTests extends IntegrationTest {
     private final JpaChatRepository chatRepository;
     private final JpaLinkRepository linkRepository;
