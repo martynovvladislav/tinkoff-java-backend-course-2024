@@ -16,9 +16,7 @@ public class TestsMockitoForStartCommand extends TestsMockitoInitializer {
     void handleTest() {
         Mockito.when(startCommand.handle(update)).thenReturn(new SendMessage(
             11L,
-            "Hello, " + "TestUser!\n" +
-                "Welcome to the Link Listener Bot. This bot can help you track updates on the web links\n" +
-                "Use /help to see available commands"
+            "Hello, " + "TestUser!\n"
         ));
         Mockito.when(update.message()).thenReturn(message);
         Mockito.when(message.text()).thenReturn("/start");
@@ -30,9 +28,7 @@ public class TestsMockitoForStartCommand extends TestsMockitoInitializer {
 
         Assertions.assertEquals(
             sendMessage.getParameters().get("text"),
-            "Hello, " + "TestUser!\n" +
-                "Welcome to the Link Listener Bot. This bot can help you track updates on the web links\n" +
-                "Use /help to see available commands"
+            "Hello, " + "TestUser!\n"
         );
         Assertions.assertEquals(
             sendMessage.getParameters().get("chat_id"),

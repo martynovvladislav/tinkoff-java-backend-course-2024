@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 public class NotificationService {
     private final MessageSupplier messageSupplier;
 
-    @KafkaListener(topics = "${app.kafka-topic-name}", containerFactory = "containerFactory")
-    public void listen(@Payload LinkUpdateDto linkUpdateDto, Acknowledgment acknowledgment) {
+    @KafkaListener(topics = "${kafka.kafka-topic-name}", containerFactory = "containerFactory")
+    public void processLinkUpdateEvent(@Payload LinkUpdateDto linkUpdateDto, Acknowledgment acknowledgment) {
         log.info("Received new update: " + linkUpdateDto);
         sendUpdates(linkUpdateDto);
         acknowledgment.acknowledge();

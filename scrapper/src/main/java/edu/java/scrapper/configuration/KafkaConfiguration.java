@@ -1,11 +1,13 @@
 package edu.java.scrapper.configuration;
 
 import edu.java.scrapper.dtos.LinkUpdateDto;
+import edu.java.scrapper.services.ScrapperQueueProducer;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -45,5 +47,11 @@ public class KafkaConfiguration {
     @Bean
     public KafkaTemplate<String, LinkUpdateDto> kafkaTemplate(ProducerFactory<String, LinkUpdateDto> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "app", name = "use-queue", havingValue = "true")
+    public ScrapperQueueProducer scrapperQueueProducer(KafkaTemplate<String, LinkUpdateDto> kafkaTemplate) {
+        return new ScrapperQueueProducer(kafkaTemplate);
     }
 }

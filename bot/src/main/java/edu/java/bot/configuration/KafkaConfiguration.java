@@ -28,13 +28,15 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 @Slf4j
 public class KafkaConfiguration {
     @Bean
-    public ConsumerFactory<String, LinkUpdateDto> consumerFactory(KafkaConsumerProperties kafkaConsumerProperties) {
+    public ConsumerFactory<String, LinkUpdateDto> consumerFactory(
+        KafkaLinkUpdatesConsumerProperties kafkaLinkUpdatesConsumerProperties
+    ) {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConsumerProperties.bootstrapServers());
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaConsumerProperties.groupId());
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, kafkaConsumerProperties.autoOffsetReset());
-        props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, kafkaConsumerProperties.maxPollIntervalMs());
-        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, kafkaConsumerProperties.enableAutoCommit());
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaLinkUpdatesConsumerProperties.bootstrapServers());
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaLinkUpdatesConsumerProperties.groupId());
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, kafkaLinkUpdatesConsumerProperties.autoOffsetReset());
+        props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, kafkaLinkUpdatesConsumerProperties.maxPollIntervalMs());
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, kafkaLinkUpdatesConsumerProperties.enableAutoCommit());
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
@@ -48,13 +50,13 @@ public class KafkaConfiguration {
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, LinkUpdateDto> containerFactory(
         ConsumerFactory<String, LinkUpdateDto> consumerFactory,
-        KafkaConsumerProperties kafkaConsumerProperties,
+        KafkaLinkUpdatesConsumerProperties kafkaLinkUpdatesConsumerProperties,
         KafkaErrorHandler errorHandler
     ) {
         ConcurrentKafkaListenerContainerFactory<String, LinkUpdateDto> factory =
             new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
-        factory.setConcurrency(kafkaConsumerProperties.concurrency());
+        factory.setConcurrency(kafkaLinkUpdatesConsumerProperties.concurrency());
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
         factory.setCommonErrorHandler(errorHandler);
         return factory;

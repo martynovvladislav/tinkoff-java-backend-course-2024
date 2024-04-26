@@ -1,6 +1,5 @@
 app:
   telegram-token: ${BOT_API_KEY}
-  kafka-topic-name: updates_main
 
 springdoc:
   swagger-ui:
@@ -37,7 +36,8 @@ bucket-cache:
   expiration-time: 10 #minutes
 
 kafka:
-  consumer:
+  kafka-topic-name: updates_main
+  link-update-topic:
     bootstrap-servers: kafka1:9092
     group-id: bot
     auto-offset-reset: earliest

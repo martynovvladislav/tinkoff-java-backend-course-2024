@@ -7,17 +7,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
-@ConfigurationProperties(prefix = "app", ignoreUnknownFields = true)
+@ConfigurationProperties(prefix = "app")
 public record ApplicationConfig(
     @NotNull
     @Bean
     Scheduler scheduler,
 
     @NotNull
-    boolean useQueue,
-
-    @NotNull
-    String kafkaTopicName
+    boolean useQueue
 ) {
     public record Scheduler(boolean enable, @NotNull Duration interval, @NotNull Duration forceCheckDelay,
                             @NotNull long secondsThreshold) {
